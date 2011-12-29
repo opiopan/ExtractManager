@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'ExtractManager' target in the 'ExtractManager' project
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif
