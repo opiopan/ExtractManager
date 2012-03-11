@@ -25,6 +25,7 @@
 		7B08D20014B9E97E00AD3516 /* UnrarTreeNameCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B08D1FF14B9E97E00AD3516 /* UnrarTreeNameCell.m */; };
 		7B11D5A014CAF4AF001B1591 /* NotificationController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7B11D59F14CAF4AF001B1591 /* NotificationController.mm */; };
 		7B341A9614ACC4FD008F698D /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7BF44BA514ACA0AF00AF3D30 /* main.mm */; };
+		7B3870CD150C87B10098E8A8 /* UnzipTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7B3870CB150C87B00098E8A8 /* UnzipTask.cpp */; };
 		7B3EB60714BB33F600025A26 /* LCDCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B3EB60614BB33F600025A26 /* LCDCell.m */; };
 		7B3EB67E14BC4AD700025A26 /* TaskScheduler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7B3EB67C14BC4AD700025A26 /* TaskScheduler.cpp */; };
 		7B3EB68514BC5EDE00025A26 /* button_pause.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B3EB68014BC5EDE00025A26 /* button_pause.png */; };
@@ -54,7 +55,9 @@
 		7B08D1FF14B9E97E00AD3516 /* UnrarTreeNameCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UnrarTreeNameCell.m; sourceTree = "<group>"; };
 		7B11D59E14CAF4AF001B1591 /* NotificationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationController.h; sourceTree = "<group>"; };
 		7B11D59F14CAF4AF001B1591 /* NotificationController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = NotificationController.mm; sourceTree = "<group>"; };
-       	       	7B11D5D814CBC7C1001B1591 /* CoreGraphicsHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreGraphicsHelper.h; sourceTree = "<group>"; };
+		7B11D5D814CBC7C1001B1591 /* CoreGraphicsHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreGraphicsHelper.h; sourceTree = "<group>"; };
+		7B3870CB150C87B00098E8A8 /* UnzipTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UnzipTask.cpp; sourceTree = "<group>"; };
+		7B3870CC150C87B10098E8A8 /* UnzipTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnzipTask.h; sourceTree = "<group>"; };
 		7B3EB60514BB33F600025A26 /* LCDCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCDCell.h; sourceTree = "<group>"; };
 		7B3EB60614BB33F600025A26 /* LCDCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCDCell.m; sourceTree = "<group>"; };
 		7B3EB67C14BC4AD700025A26 /* TaskScheduler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TaskScheduler.cpp; sourceTree = "<group>"; };
@@ -229,6 +232,8 @@
 				7BF44BB214ACA0AF00AF3D30 /* UnrarTask.cpp */,
 				7BF44BAA14ACA0AF00AF3D30 /* RarArchive.h */,
 				7BF44BA914ACA0AF00AF3D30 /* RarArchive.cpp */,
+				7B3870CC150C87B10098E8A8 /* UnzipTask.h */,
+				7B3870CB150C87B00098E8A8 /* UnzipTask.cpp */,
 			);
 			name = models;
 			path = model;
@@ -368,6 +373,7 @@
 				7B3EB67E14BC4AD700025A26 /* TaskScheduler.cpp in Sources */,
 				7B7F9CBE14C32FE2007414BF /* NSString+NormalizedString.m in Sources */,
 				7B11D5A014CAF4AF001B1591 /* NotificationController.mm in Sources */,
+				7B3870CD150C87B10098E8A8 /* UnzipTask.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

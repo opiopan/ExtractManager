@@ -38,10 +38,12 @@ static void gatewayForUnrarNotification(int taskIndex, void* context);
 {
     [self performSelectorInBackground:@selector(executeTask) withObject:nil];
 
+    // タスクリストスクロール
+    [_taskTable scrollToEndOfDocument:self];
+    
     // コントロール初期状態設定
     [self reflectSchedulingStateToControls];
     [self reflectSchedulingStateToLCD];
-    
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification
@@ -71,7 +73,8 @@ static void gatewayForUnrarNotification(int taskIndex, void* context);
     
     // タスクコントローラーの定義
     taskControlers = [NSDictionary dictionaryWithObjectsAndKeys:
-                      [[UnrarTaskController alloc] init], @"UnRAR task", 
+                      [[UnrarTaskController alloc] init], @"UnRAR task",
+                      [[UnrarTaskController alloc] init], @"UnZIP task",
                       nil];
     
     // タスクリストアクション登録
@@ -619,6 +622,7 @@ static void gatewayForUnrarNotification(int taskIndex, void* context);
             }
         }
         [_taskTable reloadData];
+        [_taskTable scrollToEndOfDocument:self];
         [self reflectSchedulingStateToControls];
         [self reflectSchedulingStateToLCD];
     } catch (TaskFactory::OtherException& e) {

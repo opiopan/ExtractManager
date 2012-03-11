@@ -1,5 +1,6 @@
 #include "task.h"
 #include "UnrarTask.h"
+#include "UnzipTask.h"
 
 //----------------------------------------------------------------------
 // タスク基底クラスの実装
@@ -51,6 +52,7 @@ SmartPtr<TaskFactory> TaskFactory::instance(NULL);
 TaskFactory::TaskFactory()
 {
     methods.insert(methods.end(), UnrarTask::getFactoryMethods());
+    methods.insert(methods.end(), UnzipTask::getFactoryMethods());
 }
 
 TaskFactory::~TaskFactory()
