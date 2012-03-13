@@ -18,8 +18,12 @@ protected:
     UnzipTask();
     UnzipTask(int id, const char* path, const char* pass);
 
+    // 展開
+    virtual void extract();
+    virtual void extractFile(const char* aname, const char* ename, int64_t size);
+    
     // タイプ文字列返却
-    virtual const char* getType();    
+    virtual const char* getType();
     
 	// ファクトリ向けメソッド
     static const char* getTypeString();

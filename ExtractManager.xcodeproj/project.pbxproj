@@ -19,11 +19,11 @@
 		7B08D1F014B956AE00AD3516 /* UnrarTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7BF44BB214ACA0AF00AF3D30 /* UnrarTask.cpp */; };
 		7B08D1F114B956B200AD3516 /* RarArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7BF44BA914ACA0AF00AF3D30 /* RarArchive.cpp */; };
 		7B08D1F214B956BD00AD3516 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7BF44BA114ACA0AF00AF3D30 /* MainMenu.xib */; };
-		7B08D1F314B956D700AD3516 /* ExtractManager-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7BF44BA314ACA0AF00AF3D30 /* ExtractManager-Info.plist */; };
 		7B08D1F514B956E900AD3516 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 7BF44B9D14ACA0AF00AF3D30 /* Credits.rtf */; };
 		7B08D1F614B9786400AD3516 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7BF44B9F14ACA0AF00AF3D30 /* InfoPlist.strings */; };
 		7B08D20014B9E97E00AD3516 /* UnrarTreeNameCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B08D1FF14B9E97E00AD3516 /* UnrarTreeNameCell.m */; };
 		7B11D5A014CAF4AF001B1591 /* NotificationController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7B11D59F14CAF4AF001B1591 /* NotificationController.mm */; };
+		7B2BF5AB1510F00A0028CF6F /* libunrar.so in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B2BF5A91510F00A0028CF6F /* libunrar.so */; };
 		7B341A9614ACC4FD008F698D /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7BF44BA514ACA0AF00AF3D30 /* main.mm */; };
 		7B3870CD150C87B10098E8A8 /* UnzipTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7B3870CB150C87B00098E8A8 /* UnzipTask.cpp */; };
 		7B3EB60714BB33F600025A26 /* LCDCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B3EB60614BB33F600025A26 /* LCDCell.m */; };
@@ -42,7 +42,6 @@
 		7BD8B59F14BF327500FCE9E9 /* task_suspend.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BD8B59C14BF327500FCE9E9 /* task_suspend.png */; };
 		7BEC9B9814BAA4F90017C349 /* TaskStateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC9B9714BAA4F90017C349 /* TaskStateCell.m */; };
 		7BF44B5E14AC398100AF3D30 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BF44B5D14AC398100AF3D30 /* Cocoa.framework */; };
-		7BF44BBC14ACA0BD00AF3D30 /* libunrar.so in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BF44BBA14ACA0AF00AF3D30 /* libunrar.so */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +55,8 @@
 		7B11D59E14CAF4AF001B1591 /* NotificationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationController.h; sourceTree = "<group>"; };
 		7B11D59F14CAF4AF001B1591 /* NotificationController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = NotificationController.mm; sourceTree = "<group>"; };
 		7B11D5D814CBC7C1001B1591 /* CoreGraphicsHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreGraphicsHelper.h; sourceTree = "<group>"; };
+		7B2BF5A91510F00A0028CF6F /* libunrar.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libunrar.so; path = unrarlib/libunrar.so; sourceTree = "<group>"; };
+		7B2BF5AA1510F00A0028CF6F /* unrar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unrar.h; path = unrarlib/unrar.h; sourceTree = "<group>"; };
 		7B3870CB150C87B00098E8A8 /* UnzipTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UnzipTask.cpp; sourceTree = "<group>"; };
 		7B3870CC150C87B10098E8A8 /* UnzipTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnzipTask.h; sourceTree = "<group>"; };
 		7B3EB60514BB33F600025A26 /* LCDCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCDCell.h; sourceTree = "<group>"; };
@@ -106,8 +107,6 @@
 		7BF44BAF14ACA0AF00AF3D30 /* Task.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Task.h; sourceTree = "<group>"; };
 		7BF44BB214ACA0AF00AF3D30 /* UnrarTask.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = UnrarTask.cpp; sourceTree = "<group>"; };
 		7BF44BB314ACA0AF00AF3D30 /* UnrarTask.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UnrarTask.h; sourceTree = "<group>"; };
-		7BF44BBA14ACA0AF00AF3D30 /* libunrar.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libunrar.so; sourceTree = "<group>"; };
-		7BF44BBB14ACA0AF00AF3D30 /* unrar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = unrar.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,8 +114,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7BF44BBC14ACA0BD00AF3D30 /* libunrar.so in Frameworks */,
 				7BF44B5E14AC398100AF3D30 /* Cocoa.framework in Frameworks */,
+				7B2BF5AB1510F00A0028CF6F /* libunrar.so in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -136,6 +135,16 @@
 				7B11D5D814CBC7C1001B1591 /* CoreGraphicsHelper.h */,
 			);
 			name = foundations;
+			sourceTree = "<group>";
+		};
+		7B2BF5AC1510F1A80028CF6F /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				7B2BF5A91510F00A0028CF6F /* libunrar.so */,
+				7B2BF5AA1510F00A0028CF6F /* unrar.h */,
+			);
+			name = Libraries;
+			path = ExtractManager;
 			sourceTree = "<group>";
 		};
 		7BB321A514B2B17E006AEA0D /* controllers */ = {
@@ -175,6 +184,7 @@
 			isa = PBXGroup;
 			children = (
 				7BF44B9A14ACA0AF00AF3D30 /* ExtractManager */,
+				7B2BF5AC1510F1A80028CF6F /* Libraries */,
 				7BF44B5C14AC398100AF3D30 /* Frameworks */,
 				7BF44B5A14AC398100AF3D30 /* Products */,
 			);
@@ -215,7 +225,6 @@
 				7BB321A514B2B17E006AEA0D /* controllers */,
 				7BF44BB414ACA0AF00AF3D30 /* resources */,
 				7BF44BBD14ACA10500AF3D30 /* Supporting files */,
-				7BF44BB914ACA0AF00AF3D30 /* unrarlib */,
 			);
 			path = ExtractManager;
 			sourceTree = "<group>";
@@ -257,15 +266,6 @@
 				7B3EB68214BC5EDE00025A26 /* button_play.png */,
 			);
 			path = resources;
-			sourceTree = "<group>";
-		};
-		7BF44BB914ACA0AF00AF3D30 /* unrarlib */ = {
-			isa = PBXGroup;
-			children = (
-				7BF44BBA14ACA0AF00AF3D30 /* libunrar.so */,
-				7BF44BBB14ACA0AF00AF3D30 /* unrar.h */,
-			);
-			path = unrarlib;
 			sourceTree = "<group>";
 		};
 		7BF44BBD14ACA10500AF3D30 /* Supporting files */ = {
@@ -337,7 +337,6 @@
 				7B08D1E914B876BE00AD3516 /* icon_running.png in Resources */,
 				7B08D1EA14B876BE00AD3516 /* icon_yes.png in Resources */,
 				7B08D1F214B956BD00AD3516 /* MainMenu.xib in Resources */,
-				7B08D1F314B956D700AD3516 /* ExtractManager-Info.plist in Resources */,
 				7B08D1F514B956E900AD3516 /* Credits.rtf in Resources */,
 				7B08D1F614B9786400AD3516 /* InfoPlist.strings in Resources */,
 				7B3EB68514BC5EDE00025A26 /* button_pause.png in Resources */,

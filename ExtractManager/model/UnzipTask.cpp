@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
+#include <sys/stat.h>
 #include "UnzipTask.h"
 
 //----------------------------------------------------------------------
@@ -20,6 +21,7 @@ UnzipTask::UnzipTask(int id, const char* path, const char* pass)
     isDirty = false;
     this->id = id;
     archivePath = path;
+    volumes.push_back(path);
     comment = "";
     if (pass){
         password = pass;
@@ -28,11 +30,12 @@ UnzipTask::UnzipTask(int id, const char* path, const char* pass)
     // ZIPアーカイブ内ファイル一欄取得コマンド文字列生成
     char escapedPath[1024];
     escapeShellString(path, escapedPath, sizeof(escapedPath));
-    std::string cmd = "zipinfo ";
+    std::string cmd = "/usr/bin/zipinfo ";
     cmd.append(escapedPath);
-    cmd.append(" | egrep -v '^[Ad0-9]' | while read a b c d e f g h i;"
+    cmd.append(" | /usr/bin/egrep -v '^[Ad0-9]' | "
+               "while read a b c d e f g h i;"
                "do printf '%.16x:%s\\n' \"$d\" \"$i\";done;"
-               "zipinfo ");
+               "/usr/bin/zipinfo ");
     cmd.append(escapedPath);
     cmd.append(" 2>/dev/null >/dev/null");
     
@@ -59,7 +62,7 @@ UnzipTask::UnzipTask(int id, const char* path, const char* pass)
     // ZIPアーカイブ内ファイル一欄取得コマンド終了コードチェック
     int rc = pclose(in);
     if (rc < 0 || !WIFEXITED(rc) || WEXITSTATUS(rc) != 0){
-        TaskFactory::OtherException e("an error occurred while "
+        TaskFactory::OtherException e("An error occurred while "
                                       "reading archive file");
         throw e;        
     }
@@ -83,6 +86,115 @@ UnzipTask::UnzipTask(int id, const char* path, const char* pass)
 
 UnzipTask::~UnzipTask(void)
 {
+}
+
+//----------------------------------------------------------------------
+// 展開
+//----------------------------------------------------------------------
+void UnzipTask::extract()
+{
+    // 展開先ファイルの存在チェック
+    for (int64_t i = 0; i < elements.size(); i++){
+        UnrarElement& element = elements[i];
+        struct stat statbuf;
+        if (stat(element.extractName.c_str(), &statbuf) == 0){
+            std::string msg("A file to extract has already exist: ");
+            msg.append(element.extractName);
+            throw msg;
+        }
+    }
+
+    // 展開
+    for (int64_t i = 0; i < elements.size(); i++){
+        UnrarElement& element = elements[i];
+        if (element.enable){
+            extractFile(element.name.c_str(), 
+                        element.extractName.c_str(), 
+                        element.size);
+        }
+    }
+}
+
+void UnzipTask::extractFile(const char* aname, const char* ename, int64_t size)
+{
+    // ディレクトリの再帰的作成
+    char escapedOut[1024];
+    escapeShellString(ename, escapedOut, sizeof(escapedOut));
+    std::string cmd = "mkdir -p \"`dirname ";
+    cmd.append(escapedOut);
+    cmd.append("`\"");
+    system(cmd.c_str());
+
+    
+    // 出力先ファイルオープン
+    FILE* out = fopen(ename, "w");
+    if (!out){
+        std::string msg(strerror(errno));
+        msg.append(": ");
+        msg.append(ename);
+        throw msg;
+    }
+    
+    // unzipコマンド文字列生成
+    char escapedElement[1024];
+    escapeShellString(aname, escapedElement, sizeof(escapedElement));
+    char escapedArchive[1024];
+    escapeShellString(archivePath.c_str(), escapedArchive, sizeof(escapedArchive));
+    cmd = "/usr/bin/unzip -p ";
+    cmd.append(escapedArchive);
+    cmd.append(" ");
+    cmd.append(escapedElement);
+    
+    // unzipコマンド起動
+    FILE* in = popen(cmd.c_str(), "r");
+    if (!in){
+        fclose(out);
+        std::string msg(strerror(errno));
+        throw msg;
+    }
+    
+    // アーカイブデータ read & write
+    static char buf[1024 * 512];
+    int64_t extracted = 0;
+    int64_t flagment = 0;
+    while ((flagment = fread(buf, 1, sizeof(buf), in)) > 0){
+        if (fwrite(buf, flagment, 1, out) != 1){
+            fclose(out);
+            pclose(in);
+            std::string msg = "Could not write to a file: ";
+            msg.append(ename);
+            throw msg;
+        }
+        extracted += flagment;
+        
+        BEGIN_LOCK(this){
+            statistics.done += flagment;
+            if (flagCanceled){
+                fclose(out);
+                pclose(in);
+                std::string msg = "Task has been aborted.";
+                throw msg;
+            }
+        }END_LOCK
+        
+        if (observer.func){
+             observer.func(observer.context);
+        }
+    }
+    
+    // クリーンアップ
+    if (fclose(out) != 0){
+        pclose(in);
+        std::string msg = "Could not write to a file: ";
+        msg.append(ename);
+        throw msg;
+    }
+    int rc = pclose(in);
+    if (rc < 0 || !WIFEXITED(rc) || WEXITSTATUS(rc) != 0 || extracted != size){
+        std::string msg = "An error occurred while extracting a file: ";
+        msg.append(aname);
+        throw msg;
+    }
 }
 
 //----------------------------------------------------------------------

@@ -163,6 +163,9 @@ protected:
 		int id, const std::vector<std::string>& files, const char* pass);
     static TaskBase* newVacuityObject();
 
+
+    virtual void extract();
+
     static int progressNotify(const char* volume, int size, void* data);
 
     void reflectTargetName(UnrarTreeNode*, const char*);

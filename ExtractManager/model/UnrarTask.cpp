@@ -431,32 +431,8 @@ void UnrarTask::run(NotifyFunc func, void* context)
             reflectTargetName(tree.operator ->(), baseDir.c_str());            
         }END_LOCK
 
-        // 展開オプション設定＆展開先ファイルの存在チェック
-        RarArchive rar(this->archivePath.c_str(), password.c_str());
-        rar.setBaseDir("");
-        rar.setNotifyFunc(UnrarTask::progressNotify, this);
-        if (elements.size() != rar.getElementNum()){
-			std::string msg("Archive file might be changed.");
-            throw msg;
-        }
-        for (int64_t i = 0; i < elements.size(); i++){
-            UnrarElement& element = elements[i];
-            struct stat statbuf;
-            if (stat(element.extractName.c_str(), &statbuf) == 0){
-				std::string msg("A file to extract has already exist: ");
-				msg.append(element.extractName);
-                throw msg;
-            }
-            if (element.name != rar.getElement(i).getName()){
-				std::string msg("Archive file might be changed.");
-                throw msg;
-            }
-            rar.getElement(i).setExtractName(element.extractName.c_str());
-            rar.getElement(i).setIgnore(!element.enable);
-        }
-    
         // 展開
-        rar.extract();
+        extract();
 
         // タイムスタンプ更新
         BEGIN_LOCK(this){
@@ -507,6 +483,35 @@ void UnrarTask::run(NotifyFunc func, void* context)
     }
 }
 
+void UnrarTask::extract()
+{
+    // 展開オプション設定＆展開先ファイルの存在チェック
+    RarArchive rar(this->archivePath.c_str(), password.c_str());
+    rar.setBaseDir("");
+    rar.setNotifyFunc(UnrarTask::progressNotify, this);
+    if (elements.size() != rar.getElementNum()){
+        std::string msg("Archive file might be changed.");
+        throw msg;
+    }
+    for (int64_t i = 0; i < elements.size(); i++){
+        UnrarElement& element = elements[i];
+        struct stat statbuf;
+        if (stat(element.extractName.c_str(), &statbuf) == 0){
+            std::string msg("A file to extract has already exist: ");
+            msg.append(element.extractName);
+            throw msg;
+        }
+        if (element.name != rar.getElement(i).getName()){
+            std::string msg("Archive file might be changed.");
+            throw msg;
+        }
+        rar.getElement(i).setExtractName(element.extractName.c_str());
+        rar.getElement(i).setIgnore(!element.enable);
+    }
+    
+    // 展開
+    rar.extract();
+}
 
 //----------------------------------------------------------------------
 // タスクキャンセル指示
