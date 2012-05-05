@@ -6,6 +6,7 @@
 #import "UnrarTaskController.h"
 #import "AppDelegate.h"
 #import "NSString+NormalizedString.h"
+#import "UnrarTreeNameCell.h"
 
 @implementation UnrarTaskController
 {
@@ -314,6 +315,8 @@
                 return [[NSWorkspace sharedWorkspace] iconForFile:@"/var"];
             }
         }else if ([[aTableColumn identifier] isEqualToString:@"name"]){
+            UnrarTreeNameCell* cell = [aTableColumn dataCell];
+            cell.isDirectory = (node->getType() != UnrarTreeNode::NODE_FILE);
             return [[NSString alloc] initWithUTF8String:node->getName()];
         }else if ([[aTableColumn identifier] isEqualToString:@"size"]){
             if (node->getType() == UnrarTreeNode::NODE_FILE){

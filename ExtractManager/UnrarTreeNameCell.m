@@ -13,6 +13,18 @@
     NSInteger selectionChangeCount;
 }
 
+@synthesize isDirectory;
+
+- (id)init
+{
+    self = [super init];
+    if (self){
+        isDirectory = NO;
+    }
+    
+    return self;
+}
+
 - (NSText *)setUpFieldEditorAttributes:(NSText *)textObj
 {
     [textObj setDelegate:self];
@@ -25,7 +37,7 @@
 {
     NSString* str = [aTextView string];
     if (selectionChangeCount > 0 && newSelectedCharRange.location == 0 && 
-        newSelectedCharRange.length == [str length]){
+        newSelectedCharRange.length == [str length] && !isDirectory){
         NSInteger extlen = [[str pathExtension] length];
         if (extlen > 0){
             newSelectedCharRange.length = [str length] - extlen -1;

@@ -10,4 +10,6 @@
 
 @interface UnrarTreeNameCell : NSTextFieldCell <NSTextDelegate, NSTextViewDelegate>
 
+@property (assign) BOOL isDirectory;
+
 @end
