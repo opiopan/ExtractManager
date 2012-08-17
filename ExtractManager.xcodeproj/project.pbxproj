@@ -41,8 +41,22 @@
 		7BD8B59E14BF327500FCE9E9 /* task_running.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BD8B59B14BF327500FCE9E9 /* task_running.png */; };
 		7BD8B59F14BF327500FCE9E9 /* task_suspend.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BD8B59C14BF327500FCE9E9 /* task_suspend.png */; };
 		7BEC9B9814BAA4F90017C349 /* TaskStateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC9B9714BAA4F90017C349 /* TaskStateCell.m */; };
+		7BF4251915DA42BD009515F0 /* libunrar.so in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7B2BF5A91510F00A0028CF6F /* libunrar.so */; };
 		7BF44B5E14AC398100AF3D30 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BF44B5D14AC398100AF3D30 /* Cocoa.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		7BF4251815DA42A6009515F0 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 6;
+			files = (
+				7BF4251915DA42BD009515F0 /* libunrar.so in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		7B08D1D914B5FFC500AD3516 /* ExtractManager.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = ExtractManager.icns; path = ../../ExtractManager.icns; sourceTree = "<group>"; };
@@ -290,6 +304,7 @@
 				7BF44B5514AC398100AF3D30 /* Sources */,
 				7BF44B5614AC398100AF3D30 /* Frameworks */,
 				7BF44B5714AC398100AF3D30 /* Resources */,
+				7BF4251815DA42A6009515F0 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -462,6 +477,8 @@
 				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = _UNIX;
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/ExtractManager/unrarlib\"";
 				INFOPLIST_FILE = "ExtractManager/ExtractManager-Info.plist";
+				LD_DYLIB_INSTALL_NAME = "";
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/ExtractManager/unrarlib\"",
@@ -483,6 +500,8 @@
 				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = _UNIX;
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/ExtractManager/unrarlib\"";
 				INFOPLIST_FILE = "ExtractManager/ExtractManager-Info.plist";
+				LD_DYLIB_INSTALL_NAME = "";
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/ExtractManager/unrarlib\"",
