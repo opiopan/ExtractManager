@@ -149,6 +149,7 @@
 				7B11D5D814CBC7C1001B1591 /* CoreGraphicsHelper.h */,
 			);
 			name = foundations;
+			path = model;
 			sourceTree = "<group>";
 		};
 		7B2BF5AC1510F1A80028CF6F /* Libraries */ = {
@@ -234,6 +235,7 @@
 		7BF44B9A14ACA0AF00AF3D30 /* ExtractManager */ = {
 			isa = PBXGroup;
 			children = (
+				7B08D20914BA84A300AD3516 /* foundations */,
 				7BF44BA614ACA0AF00AF3D30 /* models */,
 				7BB321A614B2E31E006AEA0D /* views */,
 				7BB321A514B2B17E006AEA0D /* controllers */,
@@ -246,7 +248,6 @@
 		7BF44BA614ACA0AF00AF3D30 /* models */ = {
 			isa = PBXGroup;
 			children = (
-				7B08D20914BA84A300AD3516 /* foundations */,
 				7B3EB67D14BC4AD700025A26 /* TaskScheduler.h */,
 				7B3EB67C14BC4AD700025A26 /* TaskScheduler.cpp */,
 				7BF44BAF14ACA0AF00AF3D30 /* Task.h */,
