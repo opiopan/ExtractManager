@@ -7,6 +7,7 @@
 #import "UnrarTaskController.h"
 #import "TaskStateCell.h"
 #import "NotificationController.h"
+#import "UnzipTask.h"
 
 static void gatewayForUnrarNotification(int taskIndex, void* context);
 
@@ -66,6 +67,10 @@ static void gatewayForUnrarNotification(int taskIndex, void* context);
 - (void) awakeFromNib
 {
     taskHolder = new TaskBasePtr;
+
+    // unzipコマンドのディレクトリ（バンドル内）を設定
+    NSString* executableDir = [[[NSBundle mainBundle] executablePath] stringByDeletingLastPathComponent];
+    UnzipTask::setBinDir([executableDir UTF8String]);
     
     // ドラッグ受付対象の登録
     NSArray *parrTypes = [NSArray arrayWithObject:NSFilenamesPboardType];

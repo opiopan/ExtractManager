@@ -31,6 +31,8 @@
 		7B3EB68514BC5EDE00025A26 /* button_pause.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B3EB68014BC5EDE00025A26 /* button_pause.png */; };
 		7B3EB68714BC5EDE00025A26 /* button_play.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B3EB68214BC5EDE00025A26 /* button_play.png */; };
 		7B3EB68814BC5EDE00025A26 /* lcd3.tif in Resources */ = {isa = PBXBuildFile; fileRef = 7B3EB68314BC5EDE00025A26 /* lcd3.tif */; };
+		7B4110F816490FA5006C53CE /* unzip in Resources */ = {isa = PBXBuildFile; fileRef = 7B4110F716490FA5006C53CE /* unzip */; };
+		7B4110F9164910EF006C53CE /* unzip in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7B4110F716490FA5006C53CE /* unzip */; };
 		7B4EBB4C14BACC3F005A2A42 /* TaskProgressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B4EBB4B14BACC3F005A2A42 /* TaskProgressCell.m */; };
 		7B4EBB5414BB14D7005A2A42 /* LCDView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B4EBB5314BB14D7005A2A42 /* LCDView.m */; };
 		7B7F296914AF582E00A12467 /* UnrarTaskController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7B7F296814AF582E00A12467 /* UnrarTaskController.mm */; };
@@ -52,6 +54,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 6;
 			files = (
+				7B4110F9164910EF006C53CE /* unzip in CopyFiles */,
 				7BF4251915DA42BD009515F0 /* libunrar.so in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -80,6 +83,7 @@
 		7B3EB68014BC5EDE00025A26 /* button_pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_pause.png; sourceTree = "<group>"; };
 		7B3EB68214BC5EDE00025A26 /* button_play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_play.png; sourceTree = "<group>"; };
 		7B3EB68314BC5EDE00025A26 /* lcd3.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = lcd3.tif; sourceTree = "<group>"; };
+		7B4110F716490FA5006C53CE /* unzip */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = unzip; path = ExtractManager/bin/unzip; sourceTree = "<group>"; };
 		7B4EBB4A14BACC3F005A2A42 /* TaskProgressCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskProgressCell.h; sourceTree = "<group>"; };
 		7B4EBB4B14BACC3F005A2A42 /* TaskProgressCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskProgressCell.m; sourceTree = "<group>"; };
 		7B4EBB5214BB14D7005A2A42 /* LCDView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCDView.h; sourceTree = "<group>"; };
@@ -162,6 +166,14 @@
 			path = ExtractManager;
 			sourceTree = "<group>";
 		};
+		7B4110F516490F79006C53CE /* Coprograms */ = {
+			isa = PBXGroup;
+			children = (
+				7B4110F716490FA5006C53CE /* unzip */,
+			);
+			name = Coprograms;
+			sourceTree = "<group>";
+		};
 		7BB321A514B2B17E006AEA0D /* controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -200,6 +212,7 @@
 			children = (
 				7BF44B9A14ACA0AF00AF3D30 /* ExtractManager */,
 				7B2BF5AC1510F1A80028CF6F /* Libraries */,
+				7B4110F516490F79006C53CE /* Coprograms */,
 				7BF44B5C14AC398100AF3D30 /* Frameworks */,
 				7BF44B5A14AC398100AF3D30 /* Products */,
 			);
@@ -306,6 +319,7 @@
 				7BF44B5614AC398100AF3D30 /* Frameworks */,
 				7BF44B5714AC398100AF3D30 /* Resources */,
 				7BF4251815DA42A6009515F0 /* CopyFiles */,
+				7B4110FC16491617006C53CE /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -361,10 +375,27 @@
 				7BD8B59D14BF327500FCE9E9 /* task_prepared.png in Resources */,
 				7BD8B59E14BF327500FCE9E9 /* task_running.png in Resources */,
 				7BD8B59F14BF327500FCE9E9 /* task_suspend.png in Resources */,
+				7B4110F816490FA5006C53CE /* unzip in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		7B4110FC16491617006C53CE /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "rm -f \"${TARGET_BUILD_DIR}/${EXECUTABLE_FOLDER_PATH}/zipinfo\"\nln \"${TARGET_BUILD_DIR}/${EXECUTABLE_FOLDER_PATH}/unzip\" \"${TARGET_BUILD_DIR}/${EXECUTABLE_FOLDER_PATH}/zipinfo\"";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		7BF44B5514AC398100AF3D30 /* Sources */ = {

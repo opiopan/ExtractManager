@@ -9,10 +9,15 @@
 //----------------------------------------------------------------------
 class UnzipTask : public UnrarTask
 {
+protected:
+    static std::string binDir;
+    const char*        encoding;
+    
 public:
     virtual ~UnzipTask(void);
 
 	static const TaskFactory::FactoryMethods* getFactoryMethods();
+    static void setBinDir(const char* path);
 
 protected:
     UnzipTask();

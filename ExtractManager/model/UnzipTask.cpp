@@ -7,10 +7,24 @@
 #include "UnzipTask.h"
 
 //----------------------------------------------------------------------
+// unzipコマンドディレクトリ設定
+//----------------------------------------------------------------------
+std::string UnzipTask::binDir("/bin/");
+
+void UnzipTask::setBinDir(const char* path)
+{
+    binDir = path;
+    if (binDir.at(binDir.length() - 1) != '/'){
+        binDir.append("/");
+    }
+}
+
+//----------------------------------------------------------------------
 // 構築・削除
 //----------------------------------------------------------------------
 UnzipTask::UnzipTask()
-: UnrarTask()
+    : UnrarTask()
+    , encoding(NULL)
 {
 }
 
@@ -27,12 +41,41 @@ UnzipTask::UnzipTask(int id, const char* path, const char* pass)
         password = pass;
     };
 
-    // ZIPアーカイブ内ファイル一欄取得コマンド文字列生成
+    // ZIPアーカイブパスをsh用にエスケープ
     char escapedPath[1024];
     escapeShellString(path, escapedPath, sizeof(escapedPath));
-    std::string cmd = "/usr/bin/zipinfo ";
+    
+    // アーカイブ内ファイル名のエンコーディングを特定
+    static const char* encodings[] = {
+        "-OSJIS ",
+        "-OBIG5 ",
+        "-OGB18030 ",
+        "-OGBK ",
+        "-OEUCJP ",
+        "-OUTF8 ",
+        " ",
+        NULL
+    };
+    for (const char** i = encodings; *i; i++){
+        encoding = *i;
+        std::string cmd = "LANG=ja_JP.UTF-8 ";
+        cmd.append(binDir);
+        cmd.append("zipinfo ");
+        cmd.append(encoding);
+        cmd.append(escapedPath);
+        cmd.append(" | /usr/bin/iconv -f UTF8 -t UTF8 >/dev/null 2>/dev/null");
+        if (system(cmd.c_str()) == 0){
+            break;
+        }
+    }
+    
+    // ZIPアーカイブ内ファイル一欄取得コマンド文字列生成
+    std::string cmd = "LANG=ja_JP.UTF-8 ";
+    cmd.append(binDir);
+    cmd.append("zipinfo ");
+    cmd.append(encoding);
     cmd.append(escapedPath);
-    cmd.append(" | /usr/bin/egrep -v '^[Ad0-9]' | "
+    cmd.append(" | /usr/bin/egrep -v '^[Ad0-9]' | /usr/bin/egrep ^- | "
                "while read a b c d e f g h i;"
                "do printf '%.16x:%s\\n' \"$d\" \"$i\";done;"
                "/usr/bin/zipinfo ");
@@ -140,7 +183,10 @@ void UnzipTask::extractFile(const char* aname, const char* ename, int64_t size)
     escapeShellString(aname, escapedElement, sizeof(escapedElement));
     char escapedArchive[1024];
     escapeShellString(archivePath.c_str(), escapedArchive, sizeof(escapedArchive));
-    cmd = "/usr/bin/unzip -p ";
+    cmd = "LANG=ja_JP.UTF-8 ";
+    cmd.append(binDir);
+    cmd.append("unzip -p ");
+    cmd.append(encoding);
     cmd.append(escapedArchive);
     cmd.append(" ");
     cmd.append(escapedElement);
