@@ -504,6 +504,7 @@
 		7BF44B7814AC398200AF3D30 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ExtractManager/ExtractManager-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = _UNIX;
@@ -517,7 +518,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx10.7;
+				SDKROOT = macosx;
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/ExtractManager/unrarlib\"";
 				WARNING_LDFLAGS = "-lunrar";
 				WRAPPER_EXTENSION = app;
@@ -527,6 +528,7 @@
 		7BF44B7914AC398200AF3D30 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ExtractManager/ExtractManager-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = _UNIX;
@@ -540,7 +542,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx10.7;
+				SDKROOT = macosx;
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/ExtractManager/unrarlib\"";
 				WARNING_LDFLAGS = "-lunrar";
 				WRAPPER_EXTENSION = app;
