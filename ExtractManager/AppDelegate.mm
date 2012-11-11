@@ -673,7 +673,7 @@ static void gatewayForUnrarNotification(int taskIndex, void* context);
 {
      NSBeginCriticalAlertSheet(title, @"", @"", @"", _window, self,
                        nil, nil,
-                       nil, message);
+                       nil, @"%@", message);
 }
 
 //----------------------------------------------------------------------
