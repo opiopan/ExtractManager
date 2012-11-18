@@ -292,7 +292,7 @@ void FileOutputStream::write(const void* data, int32_t size)
 
 //----------------------------------------------------------------------
 // class FileInputStream:
-//   ファイルへのアウトプットストリーム実装
+//   ファイルからのインプットストリーム実装
 //----------------------------------------------------------------------
 FileInputStream::FileInputStream(const char* path) : stream(NULL)
 {

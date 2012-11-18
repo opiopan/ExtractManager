@@ -16,6 +16,7 @@
 @property (weak) IBOutlet NSButton *toBeDeleted;
 @property (weak) IBOutlet NSButton *toUpdateTimestamp;
 @property (weak) IBOutlet NSTableView *nodeTable;
+@property (weak) IBOutlet NSPopUpButton *language;
 
 // アクション応答
 - (IBAction)onOK:(id)sender;
@@ -25,6 +26,7 @@
 - (IBAction)onResetTree:(id)sender;
 - (IBAction)onSetPassword:(id)sender;
 - (void)onNodeTableDouble:(id)sender;
+- (IBAction)onLanguageButton:(id)sender;
 
 // ノードテーブルの編集操作
 - (BOOL)tableView:(NSTableView *)aTableView textShouldEndEditing:(NSText *)textObject;

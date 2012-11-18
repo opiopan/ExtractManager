@@ -24,7 +24,6 @@ void UnzipTask::setBinDir(const char* path)
 //----------------------------------------------------------------------
 UnzipTask::UnzipTask()
     : UnrarTask()
-    , encoding(NULL)
 {
 }
 
@@ -41,39 +40,135 @@ UnzipTask::UnzipTask(int id, const char* path, const char* pass)
         password = pass;
     };
 
-    // ZIPアーカイブパスをsh用にエスケープ
-    char escapedPath[1024];
-    escapeShellString(path, escapedPath, sizeof(escapedPath));
-    
     // アーカイブ内ファイル名のエンコーディングを特定
-    static const char* encodings[] = {
-        "-OSJIS ",
-        "-OBIG5 ",
-        "-OGB18030 ",
-        "-OGBK ",
-        "-OEUCJP ",
-        "-OUTF8 ",
-        " ",
-        NULL
-    };
-    for (const char** i = encodings; *i; i++){
-        encoding = *i;
-        std::string cmd = "LANG=ja_JP.UTF-8 ";
-        cmd.append(binDir);
-        cmd.append("zipinfo ");
-        cmd.append(encoding);
-        cmd.append(escapedPath);
-        cmd.append(" | /usr/bin/iconv -f UTF8 -t UTF8 >/dev/null 2>/dev/null");
-        if (system(cmd.c_str()) == 0){
-            break;
+    languageID = -1;
+    encodingID = -1;
+    detectEncoding(path, languageID, encodingID);
+    
+    // ファイルリスト生成 & 名前空間グラフ作成
+    tree = createTree(path, languageID, encodingID, elements);
+
+    // アーカイブファイルパスをファイル名とディレクトリパスに分解
+	unsigned long sep = archivePath.rfind("/", archivePath.size() - 1);
+	if (sep != std::string::npos){
+		name = archivePath.substr(sep + 1);
+		baseDir = archivePath.substr(0, sep);
+	}else{
+		name = archivePath;
+		baseDir = "";
+	}
+}
+
+UnzipTask::~UnzipTask(void)
+{
+}
+
+//----------------------------------------------------------------------
+// ファイル名 I18N対応機能
+//----------------------------------------------------------------------
+struct Encoding{
+    const char* name;
+    const char* option;
+};
+
+#define ENCODINGENTRY(a) sizeof(a) / sizeof(Encoding), a
+
+static Encoding japaneseEncodings[] = {
+    "Shift JIS", "-OSJIS ",
+    "EUC Japanese", "-OEUCJP "
+};
+
+static Encoding chineseEncodings[] = {
+    "BIG5", "-OBIG5 ",
+    "GB18030", "-OGB18030 ",
+    "GBK", "-OGBK "
+};
+
+static Encoding universalEncodings[] = {
+    "UTF8", "-OUTF8 "
+};
+
+static struct EncodingList{
+    const char* name;
+    int         num;
+    Encoding*   encodings;
+} allEncodings[] = {
+    "Auto detect", 0, NULL,
+    "Japanese", ENCODINGENTRY(japaneseEncodings),
+    "Chinese", ENCODINGENTRY(chineseEncodings),
+    "Universal (UTF)", ENCODINGENTRY(universalEncodings),
+    NULL, -1, NULL
+};
+
+int32_t UnzipTask::getSupportedLanguageNum()
+{
+    return sizeof(allEncodings) / sizeof(allEncodings[0]) - 1;
+}
+
+const char* UnzipTask::getLanguageName(int32_t lid)
+{
+    return allEncodings[lid].name;
+}
+
+int32_t UnzipTask::getSupportedEncodingNum(int32_t lid)
+{
+    return allEncodings[lid].num;
+}
+
+const char* UnzipTask::getEncodingName(int32_t lid, int32_t eid)
+{
+    return allEncodings[lid].encodings[eid].name;
+}
+
+UnrarTreeNodePtr UnzipTask::getTreeWithEncoding(int32_t& lid, int32_t& eid,
+                                                std::vector<UnrarElement>& elm)
+{
+    if (lid <= 0 || eid < 0){
+        if (!detectEncoding(archivePath.c_str(), lid, eid)){
+            TaskFactory::OtherException e("Specified endcoding is not recognized");
+            throw e;
         }
     }
+    return createTree(archivePath.c_str(), lid, eid, elm);
+}
+
+bool UnzipTask::detectEncoding(const char* path, int32_t& lid, int32_t& eid)
+{
+    // アーカイブ内ファイル名のエンコーディングを特定
+    int32_t begin = lid <= 0 ? 1 : lid;
+    int32_t end = lid <= 0 ? sizeof(allEncodings) / sizeof(allEncodings[0]) - 1: lid + 1;
+    for (lid = begin; lid < end; lid++){
+        int32_t ebegin = eid < 0 ? 0 : eid;
+        int32_t eend = eid < 0 ? allEncodings[lid].num : eid + 1;
+        for (eid = ebegin; eid < eend; eid++){
+            char escapedPath[1024];
+            escapeShellString(path, escapedPath, sizeof(escapedPath));
+            std::string cmd = "LANG=ja_JP.UTF-8 ";
+            cmd.append(binDir);
+            cmd.append("zipinfo ");
+            cmd.append(allEncodings[lid].encodings[eid].option);
+            cmd.append(escapedPath);
+            cmd.append(" | /usr/bin/iconv -f UTF8 -t UTF8 >/dev/null 2>/dev/null");
+            if (system(cmd.c_str()) == 0){
+                return true;
+            }
+        }
+        eid = -1;
+    }
     
+    return false;
+}
+
+UnrarTreeNodePtr UnzipTask::createTree(const char* path, int32_t& lid, int32_t& eid,
+                                       std::vector<UnrarElement>& elm)
+{
     // ZIPアーカイブ内ファイル一欄取得コマンド文字列生成
+    char escapedPath[1024];
+    escapeShellString(path, escapedPath, sizeof(escapedPath));
     std::string cmd = "LANG=ja_JP.UTF-8 ";
     cmd.append(binDir);
     cmd.append("zipinfo ");
-    cmd.append(encoding);
+    cmd.append(allEncodings[lid].encodings[eid].option);
     cmd.append(escapedPath);
     cmd.append(" | /usr/bin/egrep -v '^[Ad0-9]' | /usr/bin/egrep ^- | "
                "while read a b c d e f g h i;"
@@ -90,6 +185,7 @@ UnzipTask::UnzipTask(int id, const char* path, const char* pass)
     }
     
     // ファイルリスト生成
+    elm.clear();
     char line[2048];
     while (fgets(line, sizeof(line), in)){
         size_t length = strlen(line);
@@ -99,36 +195,24 @@ UnzipTask::UnzipTask(int id, const char* path, const char* pass)
         line[16] = 0;
         long size;
         sscanf(line, "%16lx", &size);
-        elements.push_back(UnrarElement(line + 17, size));
+        elm.push_back(UnrarElement(line + 17, size));
     }
-
+    
     // ZIPアーカイブ内ファイル一欄取得コマンド終了コードチェック
     int rc = pclose(in);
     if (rc < 0 || !WIFEXITED(rc) || WEXITSTATUS(rc) != 0){
         TaskFactory::OtherException e("An error occurred while "
                                       "reading archive file");
-        throw e;        
+        throw e;
     }
-    
-    // アーカイブファイルパスをファイル名とディレクトリパスに分解
-	unsigned long sep = archivePath.rfind("/", archivePath.size() - 1);
-	if (sep != std::string::npos){
-		name = archivePath.substr(sep + 1);
-		baseDir = archivePath.substr(0, sep);
-	}else{
-		name = archivePath;
-		baseDir = "";
-	}
     
     // 名前空間グラフ作成
-    tree = UnrarTreeNode::createRootNode();
-    for (int i = 0; i < elements.size(); i++){
-        tree = UnrarTreeNode::mergeTree(tree, elements.at(i), i);
+    UnrarTreeNodePtr newTree = UnrarTreeNode::createRootNode();
+    for (int i = 0; i < elm.size(); i++){
+        newTree = UnrarTreeNode::mergeTree(newTree, elm.at(i), i);
     }
-}
-
-UnzipTask::~UnzipTask(void)
-{
+    
+    return newTree;
 }
 
 //----------------------------------------------------------------------
@@ -186,7 +270,7 @@ void UnzipTask::extractFile(const char* aname, const char* ename, int64_t size)
     cmd = "LANG=ja_JP.UTF-8 ";
     cmd.append(binDir);
     cmd.append("unzip -p ");
-    cmd.append(encoding);
+    cmd.append(allEncodings[languageID].encodings[encodingID].option);
     cmd.append(escapedArchive);
     cmd.append(" ");
     cmd.append(escapedElement);

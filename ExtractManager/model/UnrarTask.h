@@ -100,13 +100,16 @@ class UnrarTask :
 public:
     class TaskProperties{
     public:
-        std::string         baseDir;
-        std::string         password;
-        bool                flagToBeDeleted;
-        bool                flagToUpdateTimestamp;
-        UnrarTreeNodePtr    tree;
-        UnrarTreeNodePtr    initialTree;
-        UnrarTreeNode*      currentNode;
+        std::string               baseDir;
+        std::string               password;
+        bool                      flagToBeDeleted;
+        bool                      flagToUpdateTimestamp;
+        std::vector<UnrarElement> elements;
+        UnrarTreeNodePtr          tree;
+        UnrarTreeNodePtr          initialTree;
+        UnrarTreeNode*            currentNode;
+        int32_t                   languageID;
+        int32_t                   encodingID;
     };
     
 protected:
@@ -119,6 +122,8 @@ protected:
     std::vector<std::string>  volumes;
     std::vector<UnrarElement> elements;
     UnrarTreeNodePtr          tree;
+    int32_t                   languageID;
+    int32_t                   encodingID;
 
     //永続化対象外
     bool                      flagCanceled;
@@ -152,6 +157,13 @@ public:
 
     const char* getComment(){return comment.c_str();};
     std::vector<std::string>& getVolumes(){return volumes;};
+    
+    virtual int32_t getSupportedLanguageNum();
+    virtual const char* getLanguageName(int32_t lid);
+    virtual int32_t getSupportedEncodingNum(int32_t lid);
+    virtual const char* getEncodingName(int32_t lid, int32_t eid);
+    virtual UnrarTreeNodePtr getTreeWithEncoding(int32_t& lid, int32_t& eid,
+                                                 std::vector<UnrarElement>& elm);
     
 protected:
     UnrarTask();

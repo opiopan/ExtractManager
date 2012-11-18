@@ -29,6 +29,7 @@
 @synthesize toBeDeleted;
 @synthesize toUpdateTimestamp;
 @synthesize nodeTable;
+@synthesize language;
 
 //----------------------------------------------------------------------
 // オブジェクト初期化
@@ -126,6 +127,12 @@
     [volumes setStringValue:vols];
     [toBeDeleted setState:taskProps->flagToBeDeleted ? NSOnState : NSOffState];
     [toUpdateTimestamp setState:taskProps->flagToUpdateTimestamp ? NSOnState : NSOffState];
+    [language removeAllItems];
+    for (int lid = 0; lid < task->getSupportedLanguageNum(); lid++){
+        [language addItemWithTitle:[NSString stringWithUTF8String:task->getLanguageName(lid)]];
+        [[language itemAtIndex:lid] setTag:lid];
+    }
+    [language selectItemAtIndex:taskProps->languageID];
     
     // コントロール状態設定
     [nodeTable reloadData];
@@ -258,6 +265,28 @@
             [nodeTable reloadData];
             [nodeTable deselectAll:self];
         }
+    }
+}
+
+// Langage Popup Button の値変更
+- (IBAction)onLanguageButton:(id)sender {
+    long index = [language selectedTag];
+    if (taskProps->languageID != index){
+        try {
+            int32_t lid = static_cast<int32_t>(index);
+            int32_t eid = -1;
+            std::vector<UnrarElement> elm;
+            taskProps->initialTree = task->getTreeWithEncoding(lid, eid, elm);
+            taskProps->languageID = lid;
+            taskProps->encodingID = eid;
+            taskProps->elements = elm;
+            taskProps->tree = taskProps->initialTree->clone();
+            taskProps->currentNode = taskProps->tree.operator->();
+            [nodeTable reloadData];
+            [nodeTable deselectAll:self];
+        }catch (TaskFactory::OtherException e){
+        }
+        [language selectItemAtIndex:taskProps->languageID];
     }
 }
 

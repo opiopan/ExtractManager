@@ -148,6 +148,7 @@ UnrarTask::UnrarTask(int id, const RarArchive& rar)
 	, flagToBeDeleted(true)
 	, flagToUpdateTimestamp(true)
     , isDirty(false)
+    , languageID(0)
 {
     // RarArchiveオブジェクトから情報を抽出
     archivePath = rar.getArchivePath();
@@ -186,11 +187,16 @@ UnrarTask::~UnrarTask(void)
 {
 }
 
+static int OBJECT_VERSION = 2;
+static const char varstr[] = {0, OBJECT_VERSION};
+static std::string vardata(varstr, sizeof(varstr));
+
 void UnrarTask::serialize(OutputStream& s)
 {
     LockHandle l(this);
     
     TaskBase::serialize(s);
+    s << vardata;
     s << archivePath;
     s << comment;
     s << baseDir;
@@ -210,6 +216,8 @@ void UnrarTask::serialize(OutputStream& s)
     if (tree.operator ->()){
         tree->serialize(s);
     }
+    s << languageID;
+    s << encodingID;
 }
 
 void UnrarTask::deserialize(InputStream& s)
@@ -217,7 +225,25 @@ void UnrarTask::deserialize(InputStream& s)
     LockHandle l(this);
 
     TaskBase::deserialize(s);
+    
+    // 初版ではオブジェクト構造変化の考慮がなく版数を埋め込んでいなかった
+    // このため少しトリッキーな方法でver.1とver.2以降の違いを判定
     s >> archivePath;
+    int version;
+    if (archivePath.length() == sizeof(varstr) && archivePath.data()[0] == 0){
+        // ver.2以降
+        version = archivePath.data()[1];
+        if (version > OBJECT_VERSION){
+            // 未サポートの版数 or フォーマット異常
+            Serializable::InvalidFormatException e;
+            throw e;
+        }
+        s >> archivePath;
+    }else{
+        // ver.1
+        version = 1;
+    }
+    
     s >> comment;
     s >> baseDir;
     s >> password;
@@ -238,6 +264,14 @@ void UnrarTask::deserialize(InputStream& s)
     }
     tree = UnrarTreeNodePtr(new UnrarTreeNode(NULL));
     tree->deserialize(s);
+    
+    if (version >= 2){
+        s >> languageID;
+        s >> encodingID;
+    }else{
+        languageID = 0;
+        encodingID = 0;
+    }
     
     isDirty = false;
 }
@@ -317,6 +351,39 @@ TaskBase* UnrarTask::newVacuityObject()
 }
 
 //----------------------------------------------------------------------
+// ファイル名 I18N対応機能
+//----------------------------------------------------------------------
+static const char* languageNames[] = {
+    "Universal (UTF)"
+};
+
+int32_t UnrarTask::getSupportedLanguageNum()
+{
+    return sizeof(languageNames) / sizeof(languageNames[0]);
+}
+
+const char* UnrarTask::getLanguageName(int32_t lid)
+{
+    return languageNames[lid];
+}
+
+int32_t UnrarTask::getSupportedEncodingNum(int32_t lid)
+{
+    return 0;
+}
+
+const char* UnrarTask::getEncodingName(int32_t lid, int32_t eid)
+{
+    return NULL;
+}
+
+UnrarTreeNodePtr UnrarTask::getTreeWithEncoding(int32_t& lid, int32_t& eid,
+                                                std::vector<UnrarElement>& elm)
+{
+    return tree->clone();
+}
+
+//----------------------------------------------------------------------
 // タスク編集
 //----------------------------------------------------------------------
 void UnrarTask::getProperties(TaskProperties& props)
@@ -327,6 +394,7 @@ void UnrarTask::getProperties(TaskProperties& props)
     props.password = password;
     props.flagToBeDeleted = flagToBeDeleted;
     props.flagToUpdateTimestamp = flagToUpdateTimestamp;
+    props.elements = elements;
     props.tree = tree->clone();
     props.currentNode = props.tree.operator->();
     props.initialTree = UnrarTreeNode::createRootNode();
@@ -334,6 +402,8 @@ void UnrarTask::getProperties(TaskProperties& props)
         props.initialTree = 
             UnrarTreeNode::mergeTree(props.initialTree, elements[i], i);
     }
+    props.languageID = languageID;
+    props.encodingID = encodingID;
 }
 
 void UnrarTask::setProperties(const TaskProperties& props)
@@ -344,7 +414,10 @@ void UnrarTask::setProperties(const TaskProperties& props)
     uncommitedProperties.password = props.password;
     uncommitedProperties.flagToBeDeleted = props.flagToBeDeleted;
     uncommitedProperties.flagToUpdateTimestamp = props.flagToUpdateTimestamp;
+    uncommitedProperties.elements = props.elements;
     uncommitedProperties.tree = props.tree;
+    uncommitedProperties.languageID = props.languageID;
+    uncommitedProperties.encodingID = props.encodingID;
 
     isDirty = true;    
 }
@@ -369,7 +442,10 @@ void UnrarTask::commit()
         password = uncommitedProperties.password;
         flagToBeDeleted = uncommitedProperties.flagToBeDeleted;
         flagToUpdateTimestamp = uncommitedProperties.flagToUpdateTimestamp;
+        elements = uncommitedProperties.elements;
         tree = uncommitedProperties.tree;
+        languageID = uncommitedProperties.languageID;
+        encodingID = uncommitedProperties.encodingID;
     }
 }
 

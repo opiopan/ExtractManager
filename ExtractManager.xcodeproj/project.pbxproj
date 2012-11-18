@@ -261,14 +261,14 @@
 		7BF44BA614ACA0AF00AF3D30 /* models */ = {
 			isa = PBXGroup;
 			children = (
+				7BF44BAA14ACA0AF00AF3D30 /* RarArchive.h */,
+				7BF44BA914ACA0AF00AF3D30 /* RarArchive.cpp */,
 				7B3EB67D14BC4AD700025A26 /* TaskScheduler.h */,
 				7B3EB67C14BC4AD700025A26 /* TaskScheduler.cpp */,
 				7BF44BAF14ACA0AF00AF3D30 /* Task.h */,
 				7BF44BAE14ACA0AF00AF3D30 /* Task.cpp */,
 				7BF44BB314ACA0AF00AF3D30 /* UnrarTask.h */,
 				7BF44BB214ACA0AF00AF3D30 /* UnrarTask.cpp */,
-				7BF44BAA14ACA0AF00AF3D30 /* RarArchive.h */,
-				7BF44BA914ACA0AF00AF3D30 /* RarArchive.cpp */,
 				7B3870CC150C87B10098E8A8 /* UnzipTask.h */,
 				7B3870CB150C87B00098E8A8 /* UnzipTask.cpp */,
 			);

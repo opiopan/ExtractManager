@@ -11,13 +11,19 @@ class UnzipTask : public UnrarTask
 {
 protected:
     static std::string binDir;
-    const char*        encoding;
     
 public:
     virtual ~UnzipTask(void);
 
 	static const TaskFactory::FactoryMethods* getFactoryMethods();
     static void setBinDir(const char* path);
+
+    virtual int32_t getSupportedLanguageNum();
+    virtual const char* getLanguageName(int32_t lid);
+    virtual int32_t getSupportedEncodingNum(int32_t lid);
+    virtual const char* getEncodingName(int32_t lid, int32_t eid);
+    virtual UnrarTreeNodePtr getTreeWithEncoding(int32_t& lid, int32_t& eid,
+                                                 std::vector<UnrarElement> &elm);
 
 protected:
     UnzipTask();
@@ -36,7 +42,12 @@ protected:
     static TaskBase* newTaskObject(
 		int id, const std::vector<std::string>& files, const char* pass);
     static TaskBase* newVacuityObject();
-    
+
+    // I18N向け
+    bool detectEncoding(const char* path, int32_t& lid, int32_t& eid);
+    UnrarTreeNodePtr createTree(const char* path, int32_t& lid, int32_t& eid,
+                                std::vector<UnrarElement>& elm);
+
     // 外部プログラム実行用部品
     void escapeShellString(const char* src, char* dest, int length);
 };
