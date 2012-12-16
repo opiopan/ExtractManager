@@ -631,6 +631,8 @@ void UnrarTask::resume()
     if (state != TASK_RUNNING && state != TASK_SUCCEED){
         state = TASK_PREPARED;
         message = "";
+        extension1 = "";
+        extension2 = "";
         statistics.done = 0;
         flagCanceled = false;
     }
