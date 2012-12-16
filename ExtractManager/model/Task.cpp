@@ -17,26 +17,52 @@ TaskBase::~TaskBase(void)
 {
 }
 
+static int OBJECT_VERSION = 2;
+static const char verstr[] = {0, OBJECT_VERSION};
+static std::string verdata(verstr, sizeof(verstr));
+
 void TaskBase::serialize(OutputStream& s)
 {
 	s << id;
+    s << verdata;
 	s << name;
 	s << static_cast<int>(state);
 	s << statistics.total;
 	s << statistics.done;
 	s << message;
+    s << extension1;
+    s << extension2;
 }
 
 void TaskBase::deserialize(InputStream& s)
 {
 	s >> id;
 	s >> name;
+    int version;
+    if (name.length() == sizeof (verstr) && name.data()[0] == 0){
+        // ver.2以降
+        version = name.data()[1];
+        if (version > OBJECT_VERSION || version <= 1){
+            // 未サポートの版数 or フォーマット異常
+            Serializable::InvalidFormatException e;
+            throw e;
+        }
+        s >> name;
+    }else{
+        // ver.1
+        version = 1;
+    }
 	int st;
 	s >> st;
 	state = static_cast<TaskState>(st);
 	s >> statistics.total;
     s >> statistics.done;
 	s >> message;
+
+    if (version >= 2){
+        s >> extension1;
+        s >> extension2;
+    }
     
     if (state == TASK_SUCCEED || state == TASK_ERROR){
         phase = "Processing to end task";

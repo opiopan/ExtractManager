@@ -108,25 +108,25 @@
     NSString* info1 = nil;
     NSString* info2 = nil;
     if (statistics.runnningCount > 0){
-        title = [NSString stringWithFormat:@"Running a task : %@", progress.name];
+        title = [NSString stringWithFormat:NSLocalizedString(@"Running a task : %@", nil), progress.name];
         info1 = progress.currentPhase;
         if (progress.totalSize > 0){
-            info2 = [NSString stringWithFormat:@"%d %% [ %@ / %@ ] complete",
+            info2 = [NSString stringWithFormat:NSLocalizedString(@"%d %% [ %@ / %@ ] complete", nil),
                      (int)(progress.completeSize * 100 / progress.totalSize),
                      [NSString normalizedStringWithIntegerInByte:progress.completeSize], 
                      [NSString normalizedStringWithIntegerInByte:progress.totalSize]];
         }
     }else if (statistics.suspendedCount > 0){
-        title = @"Task scheduling is suspending";
-        info2 = [NSString stringWithFormat:@"pause:%ld   succeeded:%ld   error:%ld",
+        title = NSLocalizedString(@"Task scheduling is suspending", nil);
+        info2 = [NSString stringWithFormat:NSLocalizedString(@"pause:%ld   succeeded:%ld   error:%ld", nil),
                  statistics.suspendedCount, statistics.succeededCount, statistics.errorCount];
     }else if (statistics.succeededCount > 0 || statistics.errorCount > 0){
-        title = @"All tasks finished";
-        info2 = [NSString stringWithFormat:@"succeeded:%ld   error:%ld",
+        title = NSLocalizedString(@"All tasks finished", nil);
+        info2 = [NSString stringWithFormat:NSLocalizedString(@"succeeded:%ld   error:%ld", nil),
                  statistics.succeededCount, statistics.errorCount];
     }else{
-        title = @"No tasks are registerd";
-        info2 = @"Drag archive files to this window";
+        title = NSLocalizedString(@"No tasks are registerd", nil);
+        info2 = NSLocalizedString(@"Drag archive files to this window", nil);
     }
 
     // クリッピングリージョンの設定

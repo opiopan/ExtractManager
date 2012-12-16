@@ -25,6 +25,8 @@ protected:
     std::string         name;
     TaskState           state;
     std::string         message;
+    std::string         extension1;
+    std::string         extension2;
     struct {
         int64_t total;
         int64_t done;
@@ -33,6 +35,13 @@ protected:
     // 永続化対象外
     std::string         phase;
 
+    class MessageString{
+    public:
+        std::string message;
+        std::string extension1;
+        std::string extension2;
+    };
+    
 public:
     virtual ~TaskBase();
     virtual void serialize(OutputStream& s);
@@ -62,8 +71,18 @@ public:
         LockHandle l(this);
         return static_cast<int>(statistics.done * 100 / statistics.total);
     };
-    const char* getResultMessage(){
-		LockHandle l(this); return message.c_str();};
+    
+    enum RM_KIND {RM_MAIN, RM_EXT1, RM_EXT2};
+    const char* getResultMessage(RM_KIND kind){
+		LockHandle l(this);
+        if (kind == RM_MAIN){
+            return message.c_str();
+        }else if (kind == RM_EXT1){
+            return extension1.c_str();
+        }else{
+            return extension2.c_str();
+        }
+    };
 
 protected:
 	TaskBase(int id, const char* name);
@@ -90,7 +109,9 @@ public:
     class OtherException{
 	public:
 		std::string message;
-        OtherException(const char* msg):message(msg){};
+        std::string extension;
+        OtherException(const char* msg, const char* ext):
+            message(msg), extension(ext){};
     };
 
 protected:

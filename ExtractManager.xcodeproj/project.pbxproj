@@ -38,13 +38,14 @@
 		7B7F296914AF582E00A12467 /* UnrarTaskController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7B7F296814AF582E00A12467 /* UnrarTaskController.mm */; };
 		7B7F9CBE14C32FE2007414BF /* NSString+NormalizedString.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B7F9CBD14C32FE2007414BF /* NSString+NormalizedString.m */; };
 		7BB321A914B2E369006AEA0D /* UnrarTreeTableView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7BB321A814B2E369006AEA0D /* UnrarTreeTableView.mm */; };
-		7BCEBD2414B09F0E006C6692 /* UnrarTask.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7BCEBD2314B09F0E006C6692 /* UnrarTask.xib */; };
 		7BD8B59D14BF327500FCE9E9 /* task_prepared.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BD8B59A14BF327500FCE9E9 /* task_prepared.png */; };
 		7BD8B59E14BF327500FCE9E9 /* task_running.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BD8B59B14BF327500FCE9E9 /* task_running.png */; };
 		7BD8B59F14BF327500FCE9E9 /* task_suspend.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BD8B59C14BF327500FCE9E9 /* task_suspend.png */; };
 		7BEC9B9814BAA4F90017C349 /* TaskStateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC9B9714BAA4F90017C349 /* TaskStateCell.m */; };
 		7BF4251915DA42BD009515F0 /* libunrar.so in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7B2BF5A91510F00A0028CF6F /* libunrar.so */; };
 		7BF44B5E14AC398100AF3D30 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BF44B5D14AC398100AF3D30 /* Cocoa.framework */; };
+		7BFF372D167C8BF0008CDB88 /* UnrarTask.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7BFF372F167C8BF0008CDB88 /* UnrarTask.xib */; };
+		7BFF3742167C901F008CDB88 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7BFF3744167C901F008CDB88 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -95,7 +96,6 @@
 		7B7F9CBD14C32FE2007414BF /* NSString+NormalizedString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+NormalizedString.m"; path = "../NSString+NormalizedString.m"; sourceTree = "<group>"; };
 		7BB321A714B2E369006AEA0D /* UnrarTreeTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnrarTreeTableView.h; sourceTree = "<group>"; };
 		7BB321A814B2E369006AEA0D /* UnrarTreeTableView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UnrarTreeTableView.mm; sourceTree = "<group>"; };
-		7BCEBD2314B09F0E006C6692 /* UnrarTask.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UnrarTask.xib; path = ../UnrarTask.xib; sourceTree = "<group>"; };
 		7BD8B59A14BF327500FCE9E9 /* task_prepared.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = task_prepared.png; sourceTree = "<group>"; };
 		7BD8B59B14BF327500FCE9E9 /* task_running.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = task_running.png; sourceTree = "<group>"; };
 		7BD8B59C14BF327500FCE9E9 /* task_suspend.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = task_suspend.png; sourceTree = "<group>"; };
@@ -125,6 +125,12 @@
 		7BF44BAF14ACA0AF00AF3D30 /* Task.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Task.h; sourceTree = "<group>"; };
 		7BF44BB214ACA0AF00AF3D30 /* UnrarTask.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = UnrarTask.cpp; sourceTree = "<group>"; };
 		7BF44BB314ACA0AF00AF3D30 /* UnrarTask.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UnrarTask.h; sourceTree = "<group>"; };
+		7BFF372E167C8BF0008CDB88 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/UnrarTask.xib; sourceTree = "<group>"; };
+		7BFF3733167C8D80008CDB88 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		7BFF3734167C8D80008CDB88 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = ja; path = ja.lproj/Credits.rtf; sourceTree = "<group>"; };
+		7BFF3739167C8EBE008CDB88 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ExtractManager/ja.lproj/MainMenu.strings; sourceTree = SOURCE_ROOT; };
+		7BFF373B167C8EBE008CDB88 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ExtractManager/ja.lproj/UnrarTask.strings; sourceTree = SOURCE_ROOT; };
+		7BFF3743167C901F008CDB88 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -280,7 +286,10 @@
 			isa = PBXGroup;
 			children = (
 				7BF44BA114ACA0AF00AF3D30 /* MainMenu.xib */,
-				7BCEBD2314B09F0E006C6692 /* UnrarTask.xib */,
+				7BFF3738167C8EBE008CDB88 /* MainMenu.strings */,
+				7BFF372F167C8BF0008CDB88 /* UnrarTask.xib */,
+				7BFF373A167C8EBE008CDB88 /* UnrarTask.strings */,
+				7BFF3744167C901F008CDB88 /* Localizable.strings */,
 				7B08D1E314B876BE00AD3516 /* icon_no.png */,
 				7B08D1E414B876BE00AD3516 /* icon_prepared.png */,
 				7B08D1E514B876BE00AD3516 /* icon_running.png */,
@@ -320,6 +329,7 @@
 				7BF44B5714AC398100AF3D30 /* Resources */,
 				7BF4251815DA42A6009515F0 /* CopyFiles */,
 				7B4110FC16491617006C53CE /* ShellScript */,
+				7BFF3745167C906F008CDB88 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -344,6 +354,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				ja,
 			);
 			mainGroup = 7BF44B4E14AC398100AF3D30;
 			productRefGroup = 7BF44B5A14AC398100AF3D30 /* Products */;
@@ -360,7 +371,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7BCEBD2414B09F0E006C6692 /* UnrarTask.xib in Resources */,
+				7BFF372D167C8BF0008CDB88 /* UnrarTask.xib in Resources */,
 				7B08D1DA14B5FFC500AD3516 /* ExtractManager.icns in Resources */,
 				7B08D1E714B876BE00AD3516 /* icon_no.png in Resources */,
 				7B08D1E814B876BE00AD3516 /* icon_prepared.png in Resources */,
@@ -376,6 +387,7 @@
 				7BD8B59E14BF327500FCE9E9 /* task_running.png in Resources */,
 				7BD8B59F14BF327500FCE9E9 /* task_suspend.png in Resources */,
 				7B4110F816490FA5006C53CE /* unzip in Resources */,
+				7BFF3742167C901F008CDB88 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -394,6 +406,25 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "rm -f \"${TARGET_BUILD_DIR}/${EXECUTABLE_FOLDER_PATH}/zipinfo\"\nln \"${TARGET_BUILD_DIR}/${EXECUTABLE_FOLDER_PATH}/unzip\" \"${TARGET_BUILD_DIR}/${EXECUTABLE_FOLDER_PATH}/zipinfo\"";
+		};
+		7BFF3745167C906F008CDB88 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/ExtractManager/ja.lproj/MainMenu.strings",
+				"$(SRCROOT)/ExtractManager/en.lproj/MainMenu.xib",
+				"$(SRCROOT)/ExtractManager/ja.lproj/UnrarTask.strings",
+				"$(SRCROOT)/ExtractManager/en.lproj/UnrarTask.xib",
+			);
+			outputPaths = (
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/ja.lproj/MainMenu.nib",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/ja.lproj/UnrarTask.nib",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "for f in MainMenu UnrarTask;do\nibtool --import-strings-file ExtractManager/ja.lproj/${f}.strings --compile \"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ja.lproj/${f}.nib\" --output-format binary1 ExtractManager/en.lproj/${f}.xib || exit 1\ndone";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -430,6 +461,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				7BF44B9E14ACA0AF00AF3D30 /* en */,
+				7BFF3734167C8D80008CDB88 /* ja */,
 			);
 			name = Credits.rtf;
 			sourceTree = "<group>";
@@ -438,6 +470,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				7BF44BA014ACA0AF00AF3D30 /* en */,
+				7BFF3733167C8D80008CDB88 /* ja */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -450,6 +483,40 @@
 			name = MainMenu.xib;
 			path = ..;
 			sourceTree = "<group>";
+		};
+		7BFF372F167C8BF0008CDB88 /* UnrarTask.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7BFF372E167C8BF0008CDB88 /* en */,
+			);
+			name = UnrarTask.xib;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		7BFF3738167C8EBE008CDB88 /* MainMenu.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7BFF3739167C8EBE008CDB88 /* ja */,
+			);
+			name = MainMenu.strings;
+			sourceTree = "<group>";
+		};
+		7BFF373A167C8EBE008CDB88 /* UnrarTask.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7BFF373B167C8EBE008CDB88 /* ja */,
+			);
+			name = UnrarTask.strings;
+			sourceTree = "<group>";
+		};
+		7BFF3744167C901F008CDB88 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7BFF3743167C901F008CDB88 /* ja */,
+			);
+			name = Localizable.strings;
+			path = ExtractManager;
+			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXVariantGroup section */
 

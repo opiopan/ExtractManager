@@ -31,19 +31,20 @@ const wchar_t* str2wstr(const char* src)
 // 例外
 //----------------------------------------------------------------------
 RarArchiveException::~RarArchiveException(){}
+const char* RarArchiveException::getAdditionalString(){return "";}
 
 RarOpenException::~RarOpenException(){}
 const char* RarOpenException::getErrorString()
 {
     switch(code){
     case ERAR_NO_MEMORY:
-	return "Not enough memory to initialize data structures";
+        return "Not enough memory to initialize data structures";
     case ERAR_BAD_DATA:
-	return "Archive header broken";
+        return "Archive header broken";
     case ERAR_UNKNOWN_FORMAT:
-	return "Unknown encryption used for archive headers";
+        return "Unknown encryption used for archive headers";
     case ERAR_EOPEN:
-	return "File open error";
+        return "File open error";
     }
     return "";
 }
@@ -53,25 +54,25 @@ const char* RarProcessException::getErrorString()
 {
     switch(code){
     case ERAR_UNKNOWN_FORMAT:
-	return "Unknown archive format";
+        return "Unknown archive format";
     case ERAR_BAD_ARCHIVE:
-	return "Bad volume";
+        return "Bad volume";
     case ERAR_ECREATE:
-	return "File create error";
+        return "File create error";
     case ERAR_EOPEN:
-	return "Volume open error";
+        return "Volume open error";
     case ERAR_ECLOSE:
-	return "File close error";
+        return "File close error";
     case ERAR_EREAD:
-	return "Read error";
+        return "Read error";
     case ERAR_EWRITE:
-	return "Write error";
+        return "Write error";
     case ERAR_BAD_DATA:
-	return "CRC error";
+        return "CRC error";
     case ERAR_UNKNOWN:
-	return "Unknown error";
+        return "Unknown error";
     case ERAR_MISSING_PASSWORD:
-	return "Password for encrypted file is not specified";
+        return "Password for encrypted file is not specified";
     }
     return "";
 }
@@ -81,9 +82,9 @@ const char* RarReadHeaderException::getErrorString()
 {
     switch(code){
     case ERAR_END_ARCHIVE:
-	return "End of archive";
+        return "End of archive";
     case ERAR_BAD_DATA:
-	return "File header broken";
+        return "File header broken";
     }
     return "";
 }
@@ -92,6 +93,10 @@ RarOtherException::~RarOtherException(){}
 const char* RarOtherException::getErrorString()
 {
     return message.c_str();
+}
+const char* RarOtherException::getAdditionalString()
+{
+    return extension.c_str();
 }
 
 
@@ -308,7 +313,7 @@ void RarArchive::extract()
 		if (eptr.isNull()){
 		    throw RarArchiveExceptionPtr(
 			new RarOtherException(
-			    "Archive file might be corrupted."));
+			    "Archive file might be corrupted.", ""));
 		}
 		if (eptr->getIgnoreState()){
 		    skip = true;
@@ -349,10 +354,9 @@ int RarArchive::onUnrarEvent(UINT msg, LPARAM P1, LPARAM P2)
         const char* nextvol= reinterpret_cast<const char*>(P1);
         currentVolume = nextvol;
         if (P2 == RAR_VOL_ASK){
-            string msg = "A part of the archive volumes is not found: ";
-            msg += nextvol;
+            const char* msg = "A part of the archive volumes is not found: ";
             callbackException =
-                RarArchiveExceptionPtr(new RarOtherException(msg.c_str()));
+                RarArchiveExceptionPtr(new RarOtherException(msg, nextvol));
             return -1;
         }else if (P2 == RAR_VOL_NOTIFY){
             volumes.insert(volumes.end(), string(nextvol));
@@ -364,19 +368,19 @@ int RarArchive::onUnrarEvent(UINT msg, LPARAM P1, LPARAM P2)
             int rc = notifyFunc(currentVolume.c_str(), static_cast<int>(P2), 
 								notifyFuncData);
             if (rc != 0){
-                string msg = "Extracting has been canceled.";
+                const char* msg = "Extracting has been canceled.";
                 callbackException =
-                    RarArchiveExceptionPtr(new RarOtherException(msg.c_str()));
+                    RarArchiveExceptionPtr(new RarOtherException(msg, ""));
             }
             return rc;
         }
         return 0;
     case UCM_NEEDPASSWORD:
         if (password.length() == 0){
-            string msg = "Password is nessesary";
+            const char* msg = "Password is nessesary";
             callbackException =
             RarArchiveExceptionPtr(
-                new RarOtherException(msg.c_str(), RARERROR_NOPASSWORD));
+                new RarOtherException(msg, "", RARERROR_NOPASSWORD));
             return -1;
         }
         char* buf = reinterpret_cast<char*>(P1);
@@ -398,7 +402,7 @@ int CALLBACK RarArchive::callbackProc(UINT msg, LPARAM userData,
         return own->onUnrarEvent(msg, P1, P2);
     }catch (std::bad_alloc){
         own->callbackException = 
-            RarArchiveExceptionPtr(new RarOtherException("Not enough memory"));
+            RarArchiveExceptionPtr(new RarOtherException("Not enough memory", ""));
         return -1;
     }
 }

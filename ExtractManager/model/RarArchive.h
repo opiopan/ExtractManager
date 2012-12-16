@@ -19,6 +19,7 @@ public:
     virtual ~RarArchiveException();
     int getErrorCode(){ return code; };
     virtual const char* getErrorString() = 0;
+    virtual const char* getAdditionalString();
 };
 typedef SmartPtr<RarArchiveException> RarArchiveExceptionPtr;
 
@@ -46,11 +47,13 @@ public:
 class RarOtherException : public RarArchiveException{
 protected:
     std::string message;
+    std::string extension;
 public:
-    RarOtherException(const char* msg, int c = 0) 
-	: RarArchiveException(c), message(msg){};
+    RarOtherException(const char* msg, const char* ext, int c = 0)
+	: RarArchiveException(c), message(msg), extension(ext){};
     virtual ~RarOtherException();
     virtual const char* getErrorString();
+    virtual const char* getAdditionalString();
 };
 
 #define RARERROR_NOPASSWORD -99

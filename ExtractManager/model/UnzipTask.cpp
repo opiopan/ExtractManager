@@ -125,7 +125,7 @@ UnrarTreeNodePtr UnzipTask::getTreeWithEncoding(int32_t& lid, int32_t& eid,
 {
     if (lid <= 0 || eid < 0){
         if (!detectEncoding(archivePath.c_str(), lid, eid)){
-            TaskFactory::OtherException e("Specified endcoding is not recognized");
+            TaskFactory::OtherException e("Specified endcoding is not recognized", "");
             throw e;
         }
     }
@@ -180,7 +180,7 @@ UnrarTreeNodePtr UnzipTask::createTree(const char* path, int32_t& lid, int32_t& 
     // ZIPアーカイブ内ファイル一欄取得コマンド実行
     FILE* in = popen(cmd.c_str(), "r");
     if (!in){
-        TaskFactory::OtherException e(strerror(errno));
+        TaskFactory::OtherException e(strerror(errno), "");
         throw e;
     }
     
@@ -202,7 +202,7 @@ UnrarTreeNodePtr UnzipTask::createTree(const char* path, int32_t& lid, int32_t& 
     int rc = pclose(in);
     if (rc < 0 || !WIFEXITED(rc) || WEXITSTATUS(rc) != 0){
         TaskFactory::OtherException e("An error occurred while "
-                                      "reading archive file");
+                                      "reading archive file", "");
         throw e;
     }
     
@@ -225,8 +225,9 @@ void UnzipTask::extract()
         UnrarElement& element = elements[i];
         struct stat statbuf;
         if (stat(element.extractName.c_str(), &statbuf) == 0){
-            std::string msg("A file to extract has already exist: ");
-            msg.append(element.extractName);
+            MessageString msg;
+            msg.message = "A file to extract has already exist: ";
+            msg.extension1 = element.extractName;
             throw msg;
         }
     }
@@ -256,9 +257,9 @@ void UnzipTask::extractFile(const char* aname, const char* ename, int64_t size)
     // 出力先ファイルオープン
     FILE* out = fopen(ename, "w");
     if (!out){
-        std::string msg(strerror(errno));
-        msg.append(": ");
-        msg.append(ename);
+        MessageString msg;
+        msg.message = "File open error: ";
+        msg.extension1 = ename;
         throw msg;
     }
     
@@ -279,7 +280,9 @@ void UnzipTask::extractFile(const char* aname, const char* ename, int64_t size)
     FILE* in = popen(cmd.c_str(), "r");
     if (!in){
         fclose(out);
-        std::string msg(strerror(errno));
+        MessageString msg;
+        msg.message = "An error ocuurred when executing unzip command: ";
+        msg.extension1 = strerror(errno);
         throw msg;
     }
     
@@ -291,8 +294,9 @@ void UnzipTask::extractFile(const char* aname, const char* ename, int64_t size)
         if (fwrite(buf, flagment, 1, out) != 1){
             fclose(out);
             pclose(in);
-            std::string msg = "Could not write to a file: ";
-            msg.append(ename);
+            MessageString msg;
+            msg.message = "Could not write to a file: ";
+            msg.extension1 = ename;
             throw msg;
         }
         extracted += flagment;
@@ -302,7 +306,8 @@ void UnzipTask::extractFile(const char* aname, const char* ename, int64_t size)
             if (flagCanceled){
                 fclose(out);
                 pclose(in);
-                std::string msg = "Task has been aborted.";
+                MessageString msg;
+                msg.message = "Task has been aborted.";
                 throw msg;
             }
         }END_LOCK
@@ -315,14 +320,16 @@ void UnzipTask::extractFile(const char* aname, const char* ename, int64_t size)
     // クリーンアップ
     if (fclose(out) != 0){
         pclose(in);
-        std::string msg = "Could not write to a file: ";
-        msg.append(ename);
+        MessageString msg;
+        msg.message = "Could not write to a file: ";
+        msg.extension1 = ename;
         throw msg;
     }
     int rc = pclose(in);
     if (rc < 0 || !WIFEXITED(rc) || WEXITSTATUS(rc) != 0 || extracted != size){
-        std::string msg = "An error occurred while extracting a file: ";
-        msg.append(aname);
+        MessageString msg;
+        msg.message = "An error occurred while extracting a file: ";
+        msg.extension1 = aname;
         throw msg;
     }
 }

@@ -188,15 +188,15 @@ UnrarTask::~UnrarTask(void)
 }
 
 static int OBJECT_VERSION = 2;
-static const char varstr[] = {0, OBJECT_VERSION};
-static std::string vardata(varstr, sizeof(varstr));
+static const char verstr[] = {0, OBJECT_VERSION};
+static std::string verdata(verstr, sizeof(verstr));
 
 void UnrarTask::serialize(OutputStream& s)
 {
     LockHandle l(this);
     
     TaskBase::serialize(s);
-    s << vardata;
+    s << verdata;
     s << archivePath;
     s << comment;
     s << baseDir;
@@ -230,10 +230,10 @@ void UnrarTask::deserialize(InputStream& s)
     // このため少しトリッキーな方法でver.1とver.2以降の違いを判定
     s >> archivePath;
     int version;
-    if (archivePath.length() == sizeof(varstr) && archivePath.data()[0] == 0){
+    if (archivePath.length() == sizeof(verstr) && archivePath.data()[0] == 0){
         // ver.2以降
         version = archivePath.data()[1];
-        if (version > OBJECT_VERSION){
+        if (version > OBJECT_VERSION || version <= 1){
             // 未サポートの版数 or フォーマット異常
             Serializable::InvalidFormatException e;
             throw e;
@@ -339,7 +339,7 @@ TaskBase* UnrarTask::newTaskObject(
 			TaskFactory::NeedPasswordException e2;
 			throw e2;
 		}else{
-			TaskFactory::OtherException e2(e->getErrorString());
+			TaskFactory::OtherException e2(e->getErrorString(), e->getAdditionalString());
 			throw e2;
 		}
 	}
@@ -430,10 +430,10 @@ void UnrarTask::commit()
         isDirty = false;
 
         if (state == TASK_SUSPENDED || state == TASK_RUNNING){
-            TaskFactory::OtherException e("Cannot modify a running task");
+            TaskFactory::OtherException e("Cannot modify a running task", "");
             throw e;
         }else if (state == TASK_SUCCEED){
-            TaskFactory::OtherException e("Cannot modify a finished task");
+            TaskFactory::OtherException e("Cannot modify a finished task", "");
             throw e;
         }else if (state == TASK_INITIAL){
             state = TASK_PREPARED;
@@ -520,8 +520,9 @@ void UnrarTask::run(NotifyFunc func, void* context)
                 if (element.enable){
 					int rc = utimes(element.extractName.c_str(), NULL);
 					if (rc != 0){
-						std::string msg("Cannot modify time of a file: ");
-						msg.append(element.extractName.c_str());
+						MessageString msg;
+                        msg.message = "Cannot modify time of a file: ";
+						msg.extension1 = element.extractName;
 						throw msg;
 					}
                 }
@@ -535,8 +536,9 @@ void UnrarTask::run(NotifyFunc func, void* context)
         if (this->flagToBeDeleted){
             for (int64_t i = 0; i < volumes.size(); i++){
 				if (unlink(volumes[i].c_str()) != 0){
-					std::string msg("Cannot remove an archive file: ");
-					msg.append(volumes[i].c_str());
+                    MessageString msg;
+                    msg.message = "Cannot remove an archive file: ";
+					msg.extension1 = volumes[i];
                     throw msg;
                 }
             }
@@ -550,11 +552,14 @@ void UnrarTask::run(NotifyFunc func, void* context)
     }catch (RarArchiveExceptionPtr& e){
         LockHandle l(this);
         message = "An error occurred while extracting a archive: ";
-        message.append(e->getErrorString());
+        extension1 = e->getErrorString();
+        extension2 = e->getAdditionalString();
         state = TASK_ERROR;
-    }catch (std::string& s){
+    }catch (MessageString& s){
         LockHandle l(this);
-        message = s;
+        message = s.message;
+        extension1 = s.extension1;
+        extension2 = s.extension2;
         state = TASK_ERROR;
     }
 }
@@ -566,19 +571,22 @@ void UnrarTask::extract()
     rar.setBaseDir("");
     rar.setNotifyFunc(UnrarTask::progressNotify, this);
     if (elements.size() != rar.getElementNum()){
-        std::string msg("Archive file might be changed.");
+        MessageString msg;
+        msg.message = "Archive file might be changed.";
         throw msg;
     }
     for (int64_t i = 0; i < elements.size(); i++){
         UnrarElement& element = elements[i];
         struct stat statbuf;
         if (stat(element.extractName.c_str(), &statbuf) == 0){
-            std::string msg("A file to extract has already exist: ");
-            msg.append(element.extractName);
+            MessageString msg;
+            msg.message = "A file to extract has already exist: ";
+            msg.extension1 = element.extractName;
             throw msg;
         }
         if (element.name != rar.getElement(i).getName()){
-            std::string msg("Archive file might be changed.");
+            MessageString msg;
+            msg.message = "Archive file might be changed.";
             throw msg;
         }
         rar.getElement(i).setExtractName(element.extractName.c_str());

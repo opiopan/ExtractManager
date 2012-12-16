@@ -129,7 +129,7 @@
     [toUpdateTimestamp setState:taskProps->flagToUpdateTimestamp ? NSOnState : NSOffState];
     [language removeAllItems];
     for (int lid = 0; lid < task->getSupportedLanguageNum(); lid++){
-        [language addItemWithTitle:[NSString stringWithUTF8String:task->getLanguageName(lid)]];
+        [language addItemWithTitle:NSLocalizedString([NSString stringWithUTF8String:task->getLanguageName(lid)], nil)];
         [[language itemAtIndex:lid] setTag:lid];
     }
     [language selectItemAtIndex:taskProps->languageID];

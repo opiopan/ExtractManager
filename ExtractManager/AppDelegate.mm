@@ -94,7 +94,7 @@ static void gatewayForUnrarNotification(int taskIndex, void* context);
     NSImage* icon = [[NSBundle mainBundle] imageForResource:@"ExtractManager.icns"];
     [icon setSize:NSMakeSize(100, 100)];
     notifier = [[NotificationController alloc] initWithIcon:icon 
-                                                    caption:@"All extracting tasks finished" 
+                                                    caption:NSLocalizedString(@"All extracting tasks finished", nil)
                                                        font:nil visiblePeriod:2];
     
     // 実行可能ジョブがない存在しない場合は初回完了通知をスキップ
@@ -323,8 +323,8 @@ static void gatewayForUnrarNotification(int taskIndex, void* context);
             // タスクオブジェクト生成 & 編集モーダルシート起動
             [self newTaskAndEdit:files password:NULL];
         }else{
-            [self beginErrorSheetWithTitle:@"Open error" 
-                                   message:@"Specified files are not supported"];
+            [self beginErrorSheetWithTitle:NSLocalizedString(@"Open error", nil)
+                                   message:NSLocalizedString(@"Specified files are not supported", nil)];
             delete files;
         }
     }catch (std::bad_alloc){
@@ -419,27 +419,31 @@ static void gatewayForUnrarNotification(int taskIndex, void* context);
     }else if([[aTableColumn identifier] isEqualToString:@"name"]){
         return [[NSString alloc] initWithUTF8String:task->getName()];
     }else if ([[aTableColumn identifier] isEqualToString:@"type"]){
-        return [[NSString alloc] initWithUTF8String:task->getType()];
+        return NSLocalizedString([NSString stringWithUTF8String:task->getType()], nil);
     }else if ([[aTableColumn identifier] isEqualToString:@"state"]){
         switch (task->getState()){
             case TaskBase::TASK_INITIAL:
             case TaskBase::TASK_PREPARED:
-                return @"PREPARED";
+                return NSLocalizedString(@"PREPARED", nil);
             case TaskBase::TASK_RUNNING:
-                return @"RUNNING";
+                return NSLocalizedString(@"RUNNING", nil);
             case TaskBase::TASK_SUCCEED:
-                return @"SUCCEEDED";
+                return NSLocalizedString(@"SUCCEEDED", nil);
             case TaskBase::TASK_ERROR:
-                return @"ERROR";
+                return NSLocalizedString(@"ERROR", nil);
             case TaskBase::TASK_SUSPENDED:
-                return @"PAUSE";
+                return NSLocalizedString(@"PAUSE", nil);
             default:
                 return nil;
         }
     }else if ([[aTableColumn identifier] isEqualToString:@"progress"]){
         return [NSNumber numberWithInt:task->getProgress()];
     }else if ([[aTableColumn identifier] isEqualToString:@"message"]){
-        return [[NSString alloc] initWithUTF8String:task->getResultMessage()];
+        NSString* msg = [NSString stringWithUTF8String:task->getResultMessage(TaskBase::RM_MAIN)];
+        NSString* ext1 = [NSString stringWithUTF8String:task->getResultMessage(TaskBase::RM_EXT1)];
+        NSString* ext2 = [NSString stringWithUTF8String:task->getResultMessage(TaskBase::RM_EXT2)];
+        return [NSString stringWithFormat:@"%@%@%@",
+                NSLocalizedString(msg, nil), NSLocalizedString(ext1, nil), NSLocalizedString(ext2, nil)];
     }
     
     return nil;
@@ -601,8 +605,12 @@ static void gatewayForUnrarNotification(int taskIndex, void* context);
         return true;
     }catch (TaskFactory::OtherException& e){
         rc = false;
-        [self beginErrorSheetWithTitle:@"File open error" 
-                               message:[[NSString alloc] initWithUTF8String:e.message.c_str()]];
+        NSString* msg = [NSString stringWithUTF8String:e.message.c_str()];
+        NSString* ext = [NSString stringWithUTF8String:e.extension.c_str()];
+        NSString* localizedMessage = [NSString stringWithFormat:@"%@%@",
+                                      NSLocalizedString(msg, nil), NSLocalizedString(ext, nil)];
+        [self beginErrorSheetWithTitle:NSLocalizedString(@"File open error", nil)
+                               message:localizedMessage];
     }catch (std::bad_alloc){
         NSLog(@"bad_alloc detected");
         rc = false;
@@ -631,8 +639,12 @@ static void gatewayForUnrarNotification(int taskIndex, void* context);
         [self reflectSchedulingStateToControls];
         [self reflectSchedulingStateToLCD];
     } catch (TaskFactory::OtherException& e) {
-        [self beginErrorSheetWithTitle:@"An error occurred until editing a task" 
-                               message:[[NSString alloc] initWithUTF8String:e.message.c_str()]];
+        NSString* msg = [NSString stringWithUTF8String:e.message.c_str()];
+        NSString* ext = [NSString stringWithUTF8String:e.extension.c_str()];
+        NSString* localizedMessage = [NSString stringWithFormat:@"%@%@",
+                                      NSLocalizedString(msg, nil), NSLocalizedString(ext, nil)];
+        [self beginErrorSheetWithTitle:NSLocalizedString(@"An error occurred until editing a task", nil)
+                               message:localizedMessage];
     }
     
     taskHolder->setNull();

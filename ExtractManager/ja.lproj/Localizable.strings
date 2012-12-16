@@ -1,0 +1,89 @@
+/* 
+  Localizable.strings
+  ExtractManager
+
+  Created by opiopan on 2012/12/15.
+
+*/
+
+// LCDパネル用
+"Running a task : %@" = "タスク実行中 : %@";
+"%d %% [ %@ / %@ ] complete" = "%d %% [ %@ / %@ ] 完了";
+"Task scheduling is suspending" = "タスク実行を保留中";
+"pause:%ld   succeeded:%ld   error:%ld" = "保留:%ld   正常終了:%ld   エラー:%ld";
+"All tasks finished" = "すべてのタスクが完了しました";
+"succeeded:%ld   error:%ld" = "正常終了:%ld   エラー:%ld";
+"No tasks are registerd" = "タスクが登録されてません";
+"Drag archive files to this window" = "アーカイブファイルをここにドラッグします";
+
+// タスク名
+"UnRAR task" = "RAR展開";
+"UnZIP task" = "ZIP展開";
+
+// タスク状態
+"PREPARED" = "実行待ち";
+"RUNNING" = "実行中";
+"SUCCEEDED" = "正常終了";
+"ERROR" = "エラー";
+"PAUSE" = "保留中";
+
+// 言語選択
+"Universal (UTF)" = "ユニバーサル (UTF)";
+"Auto detect" = "自動判別";
+"Japanese" = "日本語";
+"Chinese" = "中国語";
+
+// 通知ウインドウ
+"All extracting tasks finished" = "すべてのタスクが完了しました";
+
+// RarOpenException
+"Not enough memory to initialize data structures" = "管理データを初期化するためのメモリが不足しています";
+"Archive header broken" = "アーカイブヘッダが壊れています";
+"Unknown encryption used for archive headers" = "アーカイブヘッダがサポートしていない方式で暗号化されています";
+
+// RarProcessException
+"Unknown archive format" = "サポートしていないフォーマットです";
+"Bad volume" = "ボリュームの内容が不当です";
+"File create error" = "ファイル作成に失敗しました";
+"Volume open error" = "ボリュームのオープンに失敗しました";
+"File close error" = "ファイルのクローズに失敗しました";
+"Read error" = "ファイル読み込み中にエラーが発生しました";
+"Write error" = "ファイル書き込み中にエラーが発生しました";
+"CRC error" = "CRCが一致しません";
+"Unknown error" = "未知のエラーが発生しました";
+"Password for encrypted file is not specified" = "暗号化されているためパスワードの指定が必要です";
+
+// RarReadHeaderException
+"End of archive" = "ヘッダ読み込み中にファイルの終端に達しました";
+"File header broken" = "ファイルヘッダーが壊れています";
+
+// RAR展開中エラー
+"Archive file might be corrupted." = "アーカイブファイルが壊れています";
+"A part of the archive volumes is not found: " = "一部のボリュームが見つかりません: ";
+"Extracting has been canceled." = "展開処理をキャンセルされました";
+"Password is nessesary" = "パスワードの指定が必要です";
+"Not enough memory" = "メモリが不足しています";
+
+// UNRARタスク
+"Cannot modify a running task" = "実行中のタスクは変更できません";
+"Cannot modify a finished task" = "完了したタスクは変更できません";
+"Cannot modify time of a file: " = "ファイル時刻の変更に失敗しました: ";
+"Cannot remove an archive file: " = "アーカイブファイルの削除に失敗しました: ";
+"An error occurred while extracting a archive: " = "アーカイブ展開中にエラーが発生しました: ";
+"Archive file might be changed." = "アーカイブファイルが変更された可能性があります";
+"A file to extract has already exist: " = "展開先ファイルが既に存在します: ";
+"Task has been aborted." = "タスクは中断されました";
+
+// UNZIPタスク
+"Specified endcoding is not recognized" = "指定されたエンコーディングを解釈できません";
+"An error occurred while reading archive file" = "アーカイブファイル読み込み中にエラーが発生しました";
+"File open error: " = "ファイルオープンエラー: ";
+"An error ocuurred when executing unzip command: " = "unzipコマンド起動中にエラーが発生しました: ";
+"Could not write to a file: " = "ファイルの書き込みに失敗しました: ";
+"An error occurred while extracting a file: " = "ファイル展開中にエラーが発生しました: ";
+
+// その他メッセージ
+"Open error" = "オープンエラー";
+"Specified files are not supported" = "指定されたファイルをサポートしていません";
+"File open error" = "ファイルオープンエラー";
+"An error occurred until editing a task" = "タスク編集中にエラーが発生しました";
