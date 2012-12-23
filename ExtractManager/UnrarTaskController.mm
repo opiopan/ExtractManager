@@ -30,6 +30,8 @@
 @synthesize toUpdateTimestamp;
 @synthesize nodeTable;
 @synthesize language;
+@synthesize deleteButton;
+@synthesize deleteRecurceButton;
 
 //----------------------------------------------------------------------
 // オブジェクト初期化
@@ -137,6 +139,7 @@
     // コントロール状態設定
     [nodeTable reloadData];
     [nodeTable deselectAll:self];
+    [self reflectSelectionToButtonState];
     
     // タスク編集シートを開始
     [[NSApplication sharedApplication] beginSheet:panel
@@ -144,6 +147,9 @@
                                     modalDelegate:self 
                                    didEndSelector:@selector(didEndEditSheet:returnCode:contextInfo:) 
                                       contextInfo:nil];
+    
+    // 初期フォーカスを設定
+    [panel makeFirstResponder:targetDir];
     
     return taskOK;
 }
@@ -255,16 +261,40 @@
 - (void)onNodeTableDouble:(id)sender
 {
     if ([nodeTable clickedRow] >= 0){
-        UnrarTreeNode* node = taskProps->currentNode->getChild([nodeTable clickedRow]);
-        if (node->getType() == UnrarTreeNode::NODE_FOLDER){
-            taskProps->currentNode = node;
-            [nodeTable reloadData];
-            [nodeTable deselectAll:self];
-        }else if (node->getType() == UnrarTreeNode::NODE_PARENT_REF){
-            taskProps->currentNode = taskProps->currentNode->getParent();
-            [nodeTable reloadData];
-            [nodeTable deselectAll:self];
-        }
+        [self moveFolderAtIndex:[nodeTable clickedRow]];
+    }
+}
+
+- (void)moveFolderAtIndex:(NSInteger)index
+{
+    UnrarTreeNode* node = taskProps->currentNode->getChild(index);
+    if (node->getType() == UnrarTreeNode::NODE_FOLDER){
+        taskProps->currentNode = node;
+        [nodeTable reloadData];
+        [nodeTable deselectAll:self];
+    }else if (node->getType() == UnrarTreeNode::NODE_PARENT_REF){
+        taskProps->currentNode = taskProps->currentNode->getParent();
+        [nodeTable reloadData];
+        [nodeTable deselectAll:self];
+    }
+}
+
+// ノードテーブルビュー上でエンターキー押下 / ⌘↓押下
+- (void)onNodeTableEnter:(id)sender
+{
+    if ([nodeTable selectedRow] >= 0){
+        [self moveFolderAtIndex:[nodeTable selectedRow]];
+    }
+}
+
+// ノードテーブルビュー上で⌘↑押下
+- (void)onNodeTableUp:(id)sender
+{
+    UnrarTreeNode* parent = taskProps->currentNode->getParent();
+    if (parent){
+        taskProps->currentNode = parent;
+        [nodeTable reloadData];
+        [nodeTable deselectAll:self];
     }
 }
 
@@ -287,6 +317,25 @@
         }catch (TaskFactory::OtherException e){
         }
         [language selectItemAtIndex:taskProps->languageID];
+    }
+}
+
+//----------------------------------------------------------------------
+// ノードテーブルの選択変更
+//----------------------------------------------------------------------
+- (void)tableViewSelectionDidChange:(NSNotification *)aNotification
+{
+    [self reflectSelectionToButtonState];
+}
+
+- (void)reflectSelectionToButtonState
+{
+    if ([nodeTable selectedRow] == -1){
+        [deleteButton setEnabled:NO];
+        [deleteRecurceButton setEnabled:NO];
+    }else{
+        [deleteButton setEnabled:YES];
+        [deleteRecurceButton setEnabled:YES];
     }
 }
 

@@ -28,6 +28,8 @@
 - (IBAction)OnDelete:(id)sender;
 - (IBAction)OnPause:(id)sender;
 - (IBAction)OnAddOrEdit:(id)sender;
+- (IBAction)OnAddTask:(id)sender;
+- (IBAction)OnEditTask:(id)sender;
 
 // コントロール状態更新
 - (void)reflectSchedulingStateToControls;

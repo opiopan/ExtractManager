@@ -208,6 +208,34 @@
 									<reference key="NSOnImage" ref="35465992"/>
 									<reference key="NSMixedImage" ref="502551668"/>
 								</object>
+								<object class="NSMenuItem" id="104202257">
+									<reference key="NSMenu" ref="769579317"/>
+									<string key="NSTitle">Add Task</string>
+									<string key="NSKeyEquiv">n</string>
+									<int key="NSKeyEquivModMask">1048576</int>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="35465992"/>
+									<reference key="NSMixedImage" ref="502551668"/>
+								</object>
+								<object class="NSMenuItem" id="320089468">
+									<reference key="NSMenu" ref="769579317"/>
+									<string key="NSTitle">Edit Task</string>
+									<string key="NSKeyEquiv"></string>
+									<int key="NSKeyEquivModMask">1048576</int>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="35465992"/>
+									<reference key="NSMixedImage" ref="502551668"/>
+								</object>
+								<object class="NSMenuItem" id="990077027">
+									<reference key="NSMenu" ref="769579317"/>
+									<bool key="NSIsDisabled">YES</bool>
+									<bool key="NSIsSeparator">YES</bool>
+									<string key="NSTitle"/>
+									<string key="NSKeyEquiv"/>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="35465992"/>
+									<reference key="NSMixedImage" ref="502551668"/>
+								</object>
 								<object class="NSMenuItem" id="824315230">
 									<reference key="NSMenu" ref="769579317"/>
 									<string key="NSTitle">Cut</string>
@@ -238,7 +266,7 @@
 								<object class="NSMenuItem" id="975379136">
 									<reference key="NSMenu" ref="769579317"/>
 									<string key="NSTitle">Delete</string>
-									<string key="NSKeyEquiv"/>
+									<string type="base64-UTF8" key="NSKeyEquiv">CA</string>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="35465992"/>
@@ -321,7 +349,7 @@
 											<string key="NSFrameSize">{744, 465}</string>
 											<reference key="NSSuperview" ref="205733992"/>
 											<reference key="NSWindow"/>
-											<reference key="NSNextKeyView" ref="292380589"/>
+											<reference key="NSNextKeyView" ref="47027482"/>
 											<string key="NSReuseIdentifierKey">_NS:1828</string>
 											<int key="NSTag">1</int>
 											<bool key="NSEnabled">YES</bool>
@@ -599,6 +627,7 @@
 									<string key="NSFrame">{{1, 477}, {837, 15}}</string>
 									<reference key="NSSuperview" ref="152948418"/>
 									<reference key="NSWindow"/>
+									<reference key="NSNextKeyView"/>
 									<string key="NSReuseIdentifierKey">_NS:1847</string>
 									<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 									<int key="NSsFlags">1</int>
@@ -624,7 +653,7 @@
 							<string key="NSFrame">{{-1, -1}, {746, 483}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="205733992"/>
+							<reference key="NSNextKeyView" ref="292380589"/>
 							<string key="NSReuseIdentifierKey">_NS:1824</string>
 							<int key="NSsFlags">133682</int>
 							<reference key="NSVScroller" ref="47027482"/>
@@ -829,7 +858,7 @@
 				<nil key="NSViewClass"/>
 				<nil key="NSUserInterfaceItemIdentifier"/>
 				<object class="NSView" key="NSWindowView" id="803002872">
-					<reference key="NSNextResponder"/>
+					<nil key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
 					<array class="NSMutableArray" key="NSSubviews">
 						<object class="NSTextField" id="524805932">
@@ -837,7 +866,6 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{91, 45}, {311, 22}}</string>
 							<reference key="NSSuperview" ref="803002872"/>
-							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="644872412"/>
 							<string key="NSReuseIdentifierKey">_NS:903</string>
 							<bool key="NSEnabled">YES</bool>
@@ -869,7 +897,6 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{9, 50}, {82, 17}}</string>
 							<reference key="NSSuperview" ref="803002872"/>
-							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="524805932"/>
 							<string key="NSReuseIdentifierKey">_NS:3944</string>
 							<bool key="NSEnabled">YES</bool>
@@ -895,7 +922,6 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{84, 4}, {102, 32}}</string>
 							<reference key="NSSuperview" ref="803002872"/>
-							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="119621505"/>
 							<string key="NSReuseIdentifierKey">_NS:687</string>
 							<bool key="NSEnabled">YES</bool>
@@ -920,7 +946,6 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{236, 4}, {102, 32}}</string>
 							<reference key="NSSuperview" ref="803002872"/>
-							<reference key="NSWindow"/>
 							<string key="NSReuseIdentifierKey">_NS:687</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="1011083865">
@@ -944,7 +969,6 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{9, 75}, {405, 34}}</string>
 							<reference key="NSSuperview" ref="803002872"/>
-							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="1063719841"/>
 							<string key="NSReuseIdentifierKey">_NS:360</string>
 							<string key="NSAntiCompressionPriority">{250, 750}</string>
@@ -963,8 +987,6 @@
 						</object>
 					</array>
 					<string key="NSFrameSize">{422, 135}</string>
-					<reference key="NSSuperview"/>
-					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="714978041"/>
 					<string key="NSReuseIdentifierKey">_NS:207</string>
 				</object>
@@ -1057,14 +1079,6 @@
 						<reference key="destination" ref="333646749"/>
 					</object>
 					<int key="connectionID">713</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">delete:</string>
-						<reference key="source" ref="1014"/>
-						<reference key="destination" ref="975379136"/>
-					</object>
-					<int key="connectionID">714</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
@@ -1201,6 +1215,30 @@
 						<reference key="destination" ref="846240027"/>
 					</object>
 					<int key="connectionID">1160</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">OnDelete:</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="975379136"/>
+					</object>
+					<int key="connectionID">1264</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">OnAddTask:</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="104202257"/>
+					</object>
+					<int key="connectionID">1268</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">OnEditTask:</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="320089468"/>
+					</object>
+					<int key="connectionID">1269</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -1602,6 +1640,9 @@
 							<reference ref="998836157"/>
 							<reference ref="844384728"/>
 							<reference ref="975379136"/>
+							<reference ref="990077027"/>
+							<reference ref="104202257"/>
+							<reference ref="320089468"/>
 						</array>
 						<reference key="parent" ref="17008353"/>
 					</object>
@@ -1715,6 +1756,21 @@
 						<reference key="object" ref="846240027"/>
 						<reference key="parent" ref="460406725"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1265</int>
+						<reference key="object" ref="990077027"/>
+						<reference key="parent" ref="769579317"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1266</int>
+						<reference key="object" ref="104202257"/>
+						<reference key="parent" ref="769579317"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1267</int>
+						<reference key="object" ref="320089468"/>
+						<reference key="parent" ref="769579317"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -1732,6 +1788,9 @@
 				<string key="1029.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<integer value="0" key="1030.IBNSSegmentedControlInspectorSelectedSegmentMetadataKey"/>
 				<string key="1030.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1265.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1266.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1267.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="129.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="130.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="131.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -1754,6 +1813,7 @@
 				<string key="372.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="494.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="536.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="537.CustomClassName">TaskTableView</string>
 				<string key="537.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="538.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="540.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -1838,7 +1898,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1263</int>
+			<int key="maxID">1269</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1847,7 +1907,9 @@
 					<string key="superclassName">NSObject</string>
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="OnAddOrEdit:">id</string>
+						<string key="OnAddTask:">id</string>
 						<string key="OnDelete:">id</string>
+						<string key="OnEditTask:">id</string>
 						<string key="OnPause:">id</string>
 						<string key="OnRun:">id</string>
 						<string key="passwordCancel:">id</string>
@@ -1858,8 +1920,16 @@
 							<string key="name">OnAddOrEdit:</string>
 							<string key="candidateClassName">id</string>
 						</object>
+						<object class="IBActionInfo" key="OnAddTask:">
+							<string key="name">OnAddTask:</string>
+							<string key="candidateClassName">id</string>
+						</object>
 						<object class="IBActionInfo" key="OnDelete:">
 							<string key="name">OnDelete:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="OnEditTask:">
+							<string key="name">OnEditTask:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="OnPause:">
@@ -1968,6 +2038,14 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/TaskStateCell.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">TaskTableView</string>
+					<string key="superclassName">NSTableView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/TaskTableView.h</string>
 					</object>
 				</object>
 			</array>

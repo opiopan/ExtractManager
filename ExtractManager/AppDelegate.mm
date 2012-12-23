@@ -336,29 +336,62 @@ static void gatewayForUnrarNotification(int taskIndex, void* context);
     switch ([sender selectedSegment]){
         case 0:{
             // add task
-            
-            [openPanel beginSheetModalForWindow:_window
-                               completionHandler:^(NSInteger result){
-                                   if (result == NSFileHandlingPanelOKButton){
-                                       [self performSelectorOnMainThread:@selector(invokeAddTask:) 
-                                                              withObject:nil 
-                                                           waitUntilDone:NO];
-                                   }
-                               }];
+            [self OnAddTask:self];
             break;
         }
         case 1:{
             // edit task
-            *taskHolder = TaskScheduler::getInstance().getTask([_taskTable selectedRow]);
-            NSString* type = [[NSString alloc] initWithUTF8String:(*taskHolder)->getType()];
-            [[taskControlers objectForKey:type] beginEditTask:taskHolder 
-                                               modalForWindow:_window 
-                                                modalDelegate:self
-                                                  endSelector:@selector(didEndEditTask:context:) 
-                                                     editType:taskModify];
+            [self OnEditTask:self];
             break;
         }
     }
+}
+
+//----------------------------------------------------------------------
+// メニュー応答
+//----------------------------------------------------------------------
+- (BOOL)validateMenuItem:(NSMenuItem *)menuItem
+{
+    SEL action = [menuItem action];
+    
+    if ([_window attachedSheet]){
+        if (action == @selector(OnEditTask:) ||
+            action == @selector(OnAddTask:) ||
+            action == @selector(OnDelete:)){
+            return NO;
+        }
+    }else{
+        if (action == @selector(OnEditTask:)){
+            if ([_taskTable selectedRow] == -1){
+                return NO;
+            }
+        }
+    }
+    
+    return YES;
+}
+
+- (IBAction)OnAddTask:(id)sender
+{
+    [openPanel beginSheetModalForWindow:_window
+                      completionHandler:^(NSInteger result){
+                          if (result == NSFileHandlingPanelOKButton){
+                              [self performSelectorOnMainThread:@selector(invokeAddTask:)
+                                                     withObject:nil
+                                                  waitUntilDone:NO];
+                          }
+                      }];
+}
+
+- (IBAction)OnEditTask:(id)sender
+{
+    *taskHolder = TaskScheduler::getInstance().getTask([_taskTable selectedRow]);
+    NSString* type = [[NSString alloc] initWithUTF8String:(*taskHolder)->getType()];
+    [[taskControlers objectForKey:type] beginEditTask:taskHolder
+                                       modalForWindow:_window
+                                        modalDelegate:self
+                                          endSelector:@selector(didEndEditTask:context:)
+                                             editType:taskModify];
 }
 
 //----------------------------------------------------------------------

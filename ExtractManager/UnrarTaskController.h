@@ -17,6 +17,8 @@
 @property (weak) IBOutlet NSButton *toUpdateTimestamp;
 @property (weak) IBOutlet NSTableView *nodeTable;
 @property (weak) IBOutlet NSPopUpButton *language;
+@property (weak) IBOutlet NSButton *deleteButton;
+@property (weak) IBOutlet NSButton *deleteRecurceButton;
 
 // アクション応答
 - (IBAction)onOK:(id)sender;

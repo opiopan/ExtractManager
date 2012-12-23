@@ -37,6 +37,7 @@
 		7B4EBB5414BB14D7005A2A42 /* LCDView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B4EBB5314BB14D7005A2A42 /* LCDView.m */; };
 		7B7F296914AF582E00A12467 /* UnrarTaskController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7B7F296814AF582E00A12467 /* UnrarTaskController.mm */; };
 		7B7F9CBE14C32FE2007414BF /* NSString+NormalizedString.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B7F9CBD14C32FE2007414BF /* NSString+NormalizedString.m */; };
+		7B9E7E391680B3B300A99D20 /* TaskTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B9E7E381680B3B300A99D20 /* TaskTableView.m */; };
 		7BB321A914B2E369006AEA0D /* UnrarTreeTableView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7BB321A814B2E369006AEA0D /* UnrarTreeTableView.mm */; };
 		7BD8B59D14BF327500FCE9E9 /* task_prepared.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BD8B59A14BF327500FCE9E9 /* task_prepared.png */; };
 		7BD8B59E14BF327500FCE9E9 /* task_running.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BD8B59B14BF327500FCE9E9 /* task_running.png */; };
@@ -94,6 +95,8 @@
 		7B7F296814AF582E00A12467 /* UnrarTaskController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UnrarTaskController.mm; sourceTree = "<group>"; };
 		7B7F9CBC14C32FE2007414BF /* NSString+NormalizedString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+NormalizedString.h"; path = "../NSString+NormalizedString.h"; sourceTree = "<group>"; };
 		7B7F9CBD14C32FE2007414BF /* NSString+NormalizedString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+NormalizedString.m"; path = "../NSString+NormalizedString.m"; sourceTree = "<group>"; };
+		7B9E7E371680B3B300A99D20 /* TaskTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskTableView.h; sourceTree = "<group>"; };
+		7B9E7E381680B3B300A99D20 /* TaskTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskTableView.m; sourceTree = "<group>"; };
 		7BB321A714B2E369006AEA0D /* UnrarTreeTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnrarTreeTableView.h; sourceTree = "<group>"; };
 		7BB321A814B2E369006AEA0D /* UnrarTreeTableView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UnrarTreeTableView.mm; sourceTree = "<group>"; };
 		7BD8B59A14BF327500FCE9E9 /* task_prepared.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = task_prepared.png; sourceTree = "<group>"; };
@@ -197,6 +200,8 @@
 		7BB321A614B2E31E006AEA0D /* views */ = {
 			isa = PBXGroup;
 			children = (
+				7B9E7E371680B3B300A99D20 /* TaskTableView.h */,
+				7B9E7E381680B3B300A99D20 /* TaskTableView.m */,
 				7BB321A714B2E369006AEA0D /* UnrarTreeTableView.h */,
 				7BB321A814B2E369006AEA0D /* UnrarTreeTableView.mm */,
 				7B08D1FE14B9E97E00AD3516 /* UnrarTreeNameCell.h */,
@@ -451,6 +456,7 @@
 				7B7F9CBE14C32FE2007414BF /* NSString+NormalizedString.m in Sources */,
 				7B11D5A014CAF4AF001B1591 /* NotificationController.mm in Sources */,
 				7B3870CD150C87B10098E8A8 /* UnzipTask.cpp in Sources */,
+				7B9E7E391680B3B300A99D20 /* TaskTableView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
