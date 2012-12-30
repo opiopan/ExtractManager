@@ -6,6 +6,21 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		7BF851E8168FE14300D3CC84 /* Install Disk Image */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 7BF851EB168FE14300D3CC84 /* Build configuration list for PBXAggregateTarget "Install Disk Image" */;
+			buildPhases = (
+				7BF851ED168FE38B00D3CC84 /* ShellScript */,
+			);
+			dependencies = (
+				7BF851F2168FE6C500D3CC84 /* PBXTargetDependency */,
+			);
+			name = "Install Disk Image";
+			productName = "Install Disk Image";
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		7B08D1DA14B5FFC500AD3516 /* ExtractManager.icns in Resources */ = {isa = PBXBuildFile; fileRef = 7B08D1D914B5FFC500AD3516 /* ExtractManager.icns */; };
 		7B08D1E714B876BE00AD3516 /* icon_no.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B08D1E314B876BE00AD3516 /* icon_no.png */; };
@@ -48,6 +63,16 @@
 		7BFF372D167C8BF0008CDB88 /* UnrarTask.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7BFF372F167C8BF0008CDB88 /* UnrarTask.xib */; };
 		7BFF3742167C901F008CDB88 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7BFF3744167C901F008CDB88 /* Localizable.strings */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		7BF851F1168FE6C500D3CC84 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7BF44B5014AC398100AF3D30 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7BF44B5814AC398100AF3D30;
+			remoteInfo = ExtractManager;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		7BF4251815DA42A6009515F0 /* CopyFiles */ = {
@@ -128,6 +153,8 @@
 		7BF44BAF14ACA0AF00AF3D30 /* Task.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Task.h; sourceTree = "<group>"; };
 		7BF44BB214ACA0AF00AF3D30 /* UnrarTask.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = UnrarTask.cpp; sourceTree = "<group>"; };
 		7BF44BB314ACA0AF00AF3D30 /* UnrarTask.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UnrarTask.h; sourceTree = "<group>"; };
+		7BF851EF168FE4F700D3CC84 /* ExtractManager-in.sparseimage */ = {isa = PBXFileReference; lastKnownFileType = file; name = "ExtractManager-in.sparseimage"; path = "DiskImageResources/ExtractManager-in.sparseimage"; sourceTree = "<group>"; };
+		7BF851F0168FE4F700D3CC84 /* ExtractManagerBackground.idraw */ = {isa = PBXFileReference; lastKnownFileType = file; name = ExtractManagerBackground.idraw; path = DiskImageResources/ExtractManagerBackground.idraw; sourceTree = "<group>"; };
 		7BFF372E167C8BF0008CDB88 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/UnrarTask.xib; sourceTree = "<group>"; };
 		7BFF3733167C8D80008CDB88 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		7BFF3734167C8D80008CDB88 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = ja; path = ja.lproj/Credits.rtf; sourceTree = "<group>"; };
@@ -265,6 +292,7 @@
 				7BB321A514B2B17E006AEA0D /* controllers */,
 				7BF44BB414ACA0AF00AF3D30 /* resources */,
 				7BF44BBD14ACA10500AF3D30 /* Supporting files */,
+				7BF851EE168FE4C300D3CC84 /* Disk Image Resources */,
 			);
 			path = ExtractManager;
 			sourceTree = "<group>";
@@ -322,6 +350,15 @@
 			name = "Supporting files";
 			sourceTree = "<group>";
 		};
+		7BF851EE168FE4C300D3CC84 /* Disk Image Resources */ = {
+			isa = PBXGroup;
+			children = (
+				7BF851EF168FE4F700D3CC84 /* ExtractManager-in.sparseimage */,
+				7BF851F0168FE4F700D3CC84 /* ExtractManagerBackground.idraw */,
+			);
+			name = "Disk Image Resources";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -367,6 +404,7 @@
 			projectRoot = "";
 			targets = (
 				7BF44B5814AC398100AF3D30 /* ExtractManager */,
+				7BF851E8168FE14300D3CC84 /* Install Disk Image */,
 			);
 		};
 /* End PBXProject section */
@@ -411,6 +449,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "rm -f \"${TARGET_BUILD_DIR}/${EXECUTABLE_FOLDER_PATH}/zipinfo\"\nln \"${TARGET_BUILD_DIR}/${EXECUTABLE_FOLDER_PATH}/unzip\" \"${TARGET_BUILD_DIR}/${EXECUTABLE_FOLDER_PATH}/zipinfo\"";
+		};
+		7BF851ED168FE38B00D3CC84 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/ExtractManager/DiskImageResources/ExtractManager-in.sparseimage",
+			);
+			outputPaths = (
+				"$(TARGET_BUILD_DIR)/ExtractManager.dmg",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "PRODUCT=ExtractManager\nSRC=\"${SRCROOT}/${PRODUCT}/DiskImageResources/${PRODUCT}-in.sparseimage\"\nIN=\"${DERIVED_FILE_DIR}/${PRODUCT}-in.sparseimage\"\nMP=\"${DERIVED_FILE_DIR}/mp\"\nOUT=\"${TARGET_BUILD_DIR}/${PRODUCT}.dmg\"\nrm -rf \"${DERIVED_FILE_DIR}\"\nmkdir \"${DERIVED_FILE_DIR}\"\nmkdir \"$MP\"\ncp \"$SRC\" \"$IN\"\nhdiutil attach \"$IN\" -mountpoint \"$MP\"\nrm -rf \"$MP\"/${PRODUCT}.app\ncp -r \"${TARGET_BUILD_DIR}/${PRODUCT}.app\" \"$MP\"\nhdiutil detach \"$MP\"\nrm -f \"$OUT\"\nhdiutil convert -format UDZO -o \"$OUT\" \"$IN\"\nrm -r \"$MP\"\nrm -f \"$IN\"";
 		};
 		7BFF3745167C906F008CDB88 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -461,6 +514,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		7BF851F2168FE6C500D3CC84 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7BF44B5814AC398100AF3D30 /* ExtractManager */;
+			targetProxy = 7BF851F1168FE6C500D3CC84 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		7BF44B9D14ACA0AF00AF3D30 /* Credits.rtf */ = {
@@ -622,6 +683,20 @@
 			};
 			name = Release;
 		};
+		7BF851E9168FE14300D3CC84 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		7BF851EA168FE14300D3CC84 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -642,6 +717,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		7BF851EB168FE14300D3CC84 /* Build configuration list for PBXAggregateTarget "Install Disk Image" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7BF851E9168FE14300D3CC84 /* Debug */,
+				7BF851EA168FE14300D3CC84 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
