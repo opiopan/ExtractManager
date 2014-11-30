@@ -69,7 +69,11 @@ public:
     };
     int getProgress(){
         LockHandle l(this);
-        return static_cast<int>(statistics.done * 100 / statistics.total);
+        if (statistics.total){
+            return static_cast<int>(statistics.done * 100 / statistics.total);
+        }else{
+            return 100;
+        }
     };
     
     enum RM_KIND {RM_MAIN, RM_EXT1, RM_EXT2};

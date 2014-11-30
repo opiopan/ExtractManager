@@ -629,7 +629,15 @@ static void gatewayForUnrarNotification(int taskIndex, void* context);
                                                        editType:taskNew] == taskOK;
     }catch (TaskFactory::NeedPasswordException){
         // パスワードが必要なファイルの場合：パスワード入力モーダルシートを起動
-        [_passwordField setStringValue:@""];
+        NSPasteboard* pasteboard = [NSPasteboard generalPasteboard];
+        NSArray* classes = @[[NSString class]];
+        NSDictionary* options = @{};
+        NSArray* copiedItems = [pasteboard readObjectsForClasses:classes options:options];
+        if (copiedItems){
+            [_passwordField setStringValue:copiedItems[0]];
+        }else{
+            [_passwordField setStringValue:@""];
+        }
         [[NSApplication sharedApplication] beginSheet:[_passwordSheet window]
                                        modalForWindow:_window 
                                         modalDelegate:self 
